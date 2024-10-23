@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="50%" style="stop-color:#FDB900"/>
+      <stop offset="100%" style="stop-color:#FFA500"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <style>
+    .logo-text {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: 1px;
+      fill: #fff;
+      filter: url(#shadow);
+    }
+    .star {
+      fill: url(#goldGradient);
+      filter: url(#shadow);
+    }
+    .ball {
+      fill: #fff;
+      stroke: #fff;
+      stroke-width: 0.5;
+    }
+  </style>
+
+  <!-- Star with Ball -->
+  <g transform="translate(30, 15)">
+    <!-- Star shape -->
+    <path class="star" d="M20 0
+      L24.5 13.5
+      L38.5 13.5
+      L27.5 22
+      L32 35.5
+      L20 27
+      L8 35.5
+      L12.5 22
+      L1.5 13.5
+      L15.5 13.5Z"/>
+    
+    <!-- Stylized ball -->
+    <circle class="ball" cx="20" cy="18" r="6"/>
+    <path class="ball" d="M16 15
+      Q20 13 24 15
+      Q20 23 16 15" 
+      fill="none"/>
+    <path class="ball" d="M16 21
+      Q20 23 24 21
+      Q20 13 16 21" 
+      fill="none"/>
+  </g>
+
+  <!-- Text -->
+  <text x="75" y="35" class="logo-text" font-size="24">STAR</text>
+  <text x="75" y="48" class="logo-text" font-size="12">FOOTVOLLEY</text>
+</svg>

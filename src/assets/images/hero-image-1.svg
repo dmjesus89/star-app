@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="skyGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" style="stop-color:#87CEEB"/>
+      <stop offset="100%" style="stop-color:#4682B4"/>
+    </linearGradient>
+    <linearGradient id="sandGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" style="stop-color:#F4D03F"/>
+      <stop offset="100%" style="stop-color:#E5BE01"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="600" fill="url(#skyGradient)"/>
+  
+  <!-- Sand -->
+  <path d="M0,400 Q600,380 1200,400 L1200,600 L0,600 Z" fill="url(#sandGradient)"/>
+  
+  <!-- Net -->
+  <line x1="580" y1="250" x2="580" y2="400" stroke="white" stroke-width="3"/>
+  <line x1="620" y1="250" x2="620" y2="400" stroke="white" stroke-width="3"/>
+  <path d="M580,250 Q600,245 620,250" stroke="white" stroke-width="3" fill="none"/>
+  
+  <!-- Net Pattern -->
+  <g stroke="white" stroke-width="1" opacity="0.5">
+    <!-- Vertical lines -->
+    <line x1="590" y1="250" x2="590" y2="400"/>
+    <line x1="600" y1="250" x2="600" y2="400"/>
+    <line x1="610" y1="250" x2="610" y2="400"/>
+    
+    <!-- Horizontal lines -->
+    <line x1="580" y1="270" x2="620" y2="270"/>
+    <line x1="580" y1="290" x2="620" y2="290"/>
+    <line x1="580" y1="310" x2="620" y2="310"/>
+    <line x1="580" y1="330" x2="620" y2="330"/>
+    <line x1="580" y1="350" x2="620" y2="350"/>
+    <line x1="580" y1="370" x2="620" y2="370"/>
+    <line x1="580" y1="390" x2="620" y2="390"/>
+  </g>
+
+  <!-- Player Silhouettes -->
+  <!-- Left Player -->
+  <g fill="#000">
+    <path d="M400,320 Q410,310 420,320 T440,330 L430,370 L410,370 Z" opacity="0.8"/>
+    <circle cx="420" cy="300" r="15"/>
+  </g>
+  
+  <!-- Right Player -->
+  <g fill="#000">
+    <path d="M750,340 Q760,330 770,340 T790,350 L780,390 L760,390 Z" opacity="0.8"/>
+    <circle cx="770" cy="320" r="15"/>
+  </g>
+
+  <!-- Ball -->
+  <circle cx="500" cy="280" r="10" fill="yellow" stroke="#000" stroke-width="1"/>
+
+  <!-- Palm Trees -->
+  <g transform="translate(100,350)">
+    <path d="M-10,0 L10,0 L0,-80 Z" fill="#2E7D32"/>
+    <path d="M-5,-40 Q-20,-30 -30,-40" stroke="#2E7D32" stroke-width="5" fill="none"/>
+    <path d="M5,-40 Q20,-30 30,-40" stroke="#2E7D32" stroke-width="5" fill="none"/>
+  </g>
+  
+  <g transform="translate(1100,350)">
+    <path d="M-10,0 L10,0 L0,-80 Z" fill="#2E7D32"/>
+    <path d="M-5,-40 Q-20,-30 -30,-40" stroke="#2E7D32" stroke-width="5" fill="none"/>
+    <path d="M5,-40 Q20,-30 30,-40" stroke="#2E7D32" stroke-width="5" fill="none"/>
+  </g>
+
+  <!-- Text Overlay -->
+  <g style="filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3))">
+    <text x="600" y="100" 
+          fill="#FFD700" 
+          font-size="48" 
+          font-weight="bold" 
+          text-anchor="middle" 
+          font-family="Arial">
+      STAR FOOTVOLLEY
+    </text>
+  </g>
+</svg>

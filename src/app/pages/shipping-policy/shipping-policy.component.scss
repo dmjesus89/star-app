@@ -1,0 +1,124 @@
+.shipping {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    background-color: #f8f9fa;
+  
+    &__container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  
+    &__title {
+      font-size: 2.5rem;
+      color: #1a1a1a;
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #f0f0f0;
+    }
+  
+    &__intro {
+      margin-bottom: 2rem;
+      line-height: 1.6;
+      color: #555;
+    }
+  
+    &__contact {
+      background-color: #e8f4fd;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+  
+      p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        color: #004085;
+  
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  
+    &__delivery-times {
+      margin-bottom: 2rem;
+    }
+  
+    &__region {
+      background-color: #fff;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+  
+      &-name {
+        font-weight: 600;
+        color: #333;
+      }
+  
+      &-time {
+        color: #007bff;
+        font-weight: 500;
+      }
+    }
+  
+    &__link {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+  
+      &:hover {
+        color: #0056b3;
+        text-decoration: underline;
+      }
+    }
+  
+    &__email {
+      font-weight: 500;
+      color: #004085;
+    }
+  
+    @media (max-width: 768px) {
+      padding: 1.5rem 1rem;
+  
+      &__container {
+        padding: 1.5rem;
+      }
+  
+      &__title {
+        font-size: 2rem;
+      }
+  
+      &__region {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
+  
+    @media (max-width: 480px) {
+      padding: 1rem 0.5rem;
+  
+      &__container {
+        padding: 1rem;
+      }
+  
+      &__title {
+        font-size: 1.75rem;
+      }
+    }
+  }

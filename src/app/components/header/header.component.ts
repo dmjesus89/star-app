@@ -1,70 +1,77 @@
-// src/app/components/header/header.component.ts
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { CartService } from '../../services/cart.service';
-import { AuthService } from '../../services/auth.service';
-
+import { RouterModule, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule],
-  template: `
-    <header class="header">
-      <nav class="nav">
-        <div class="nav__logo">
-          <a routerLink="/">
-            <img src="assets/logo.png" alt="Star Beachwear" />
-          </a>
-        </div>
-        
-        <div class="nav__menu">
-          <a routerLink="/men" routerLinkActive="active">MEN</a>
-          <a routerLink="/women" routerLinkActive="active">WOMEN</a>
-          <a routerLink="/accessories" routerLinkActive="active">ACCESSORIES</a>
-        </div>
-        
-        <div class="nav__actions">
-          <div class="search">
-            <input type="search" placeholder="Search..." />
-          </div>
-          
-          <a routerLink="/cart" class="cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count" *ngIf="cartItemCount$ | async as count">
-              {{ count }}
-            </span>
-          </a>
-          
-          <ng-container *ngIf="isLoggedIn$ | async; else loginButton">
-            <button class="account-btn" [matMenuTriggerFor]="menu">
-              <i class="fas fa-user"></i>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item routerLink="/profile">Profile</button>
-              <button mat-menu-item routerLink="/orders">Orders</button>
-              <button mat-menu-item (click)="logout()">Logout</button>
-            </mat-menu>
-          </ng-container>
-          
-          <ng-template #loginButton>
-            <a routerLink="/login" class="login-btn">Login</a>
-          </ng-template>
-        </div>
-      </nav>
-    </header>
-  `,
+  imports: [RouterModule, CommonModule, MatMenuModule, MatIconModule],
+  templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
-  cartItemCount$ = this.cartService.cartItemCount$;
-  isLoggedIn$ = this.authService.isLoggedIn$;
 
-  constructor(
-    private cartService: CartService,
-    private authService: AuthService
-  ) {}
+export class HeaderComponent {
+  private cartItemsCountSubject = new BehaviorSubject<number>(3);
+  cartItemCount$ = this.cartItemsCountSubject.asObservable();
+
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  isLoggedIn$ = this.isLoggedInSubject.asObservable();
+
+  activeMenu: string | null = null;
+  
+  menItems = [
+    'Swim Trunks',
+    'Short',
+    'Tank Top',
+    'T-Shirt',
+    'Leggings',
+    'Base Layer',
+    'Sand Socks',
+    'Hoodie'
+  ];
+
+  womenItems = [
+    'Slip',
+    'Top',
+    'Short',
+    'Tank Top',
+    'T-Shirt',
+    'Leggings',
+    'Base Layer',
+    'Sand Socks',
+    'Hoodie'
+  ];
+
+  constructor(private router: Router) {}
+
+  showMenu(menu: string): void {
+    this.activeMenu = menu;
+  }
+
+  hideMenu(): void {
+    this.activeMenu = null;
+  }
+
+  formatRoute(item: string): string {
+    // Convert "Tank Top" to "tank-top", "T-Shirt" to "t-shirt", etc.
+    return item.toLowerCase().replace(/\s+/g, '-');
+  }
+
+  navigateToCategory(category: string): void {
+    this.router.navigate(['/products', category]);
+  }
+
+  navigateToSubcategory(category: string, subcategory: string): void {
+    this.router.navigate(['/products', category, subcategory]);
+  }
 
   logout(): void {
-    this.authService.logout();
+    this.isLoggedInSubject.next(false);
+  }
+
+  login(): void {
+    this.isLoggedInSubject.next(true);
   }
 }

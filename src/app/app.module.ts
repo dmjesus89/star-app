@@ -1,54 +1,26 @@
-// src/app/app.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { MatBadgeModule } from '@angular/material/badge';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
 
-// Components
 import { AppComponent } from './app.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
-import { ProductCardComponent } from './components/product-card/product-card.component';
-
-// Pages
-import { HomeComponent } from './pages/home/home.component';
-import { MenComponent } from './pages/men/men.component';
-import { CartComponent } from './pages/cart/cart.component';
-import { AccessoriesComponent } from './pages/accessories/accessories.component';
-import { SignupComponent } from './pages/signup/signup.component';
-
-// Services
-import { ProductService } from './services/product.service';
-import { CartService } from './services/cart.service';
-import { AuthService } from './services/auth.service';
-
-// Routes
-import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ProductListComponent,
-    ProductCardComponent,
-    HomeComponent,
-    MenComponent,
-    CartComponent,
-    AccessoriesComponent,
-    SignupComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    AppRoutingModule
+    HttpClientModule,
+    MatBadgeModule,
+    BrowserAnimationsModule,
+    MatIconModule
   ],
-  providers: [
-    ProductService,
-    CartService,
-    AuthService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

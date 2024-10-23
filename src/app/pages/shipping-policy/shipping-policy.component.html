@@ -1,0 +1,38 @@
+<div class="shipping">
+    <div class="shipping__container">
+      <h1 class="shipping__title">Shipping Policy</h1>
+  
+      <div class="shipping__intro">
+        <p>
+          We want you to have the best experience possible and enjoy shopping with us. For most orders, please allow up to 21 business days for delivery but below outlines further specifics surrounding shipping timeframes for different parts of the world. We use this timeframe as a precaution to ensure your order delivers in time, but in most cases orders arrive well before the maximum time frame.
+        </p>
+      </div>
+  
+      <div class="shipping__contact">
+        <p>
+          If you have any questions, issues or need assistance with tracking your order please use the 
+          <a routerLink="/contact" class="shipping__link">Contact Us</a> 
+          link on the top of this page. Alternatively you can also email us at 
+          <span class="shipping__email">info&#64;starbeachwear.com</span>.
+        </p>
+        <p>
+          We will respond within 24 hours to your email. Tracking information is available within 4-5 business days from the day we sent you the tracking code.
+        </p>
+      </div>
+  
+      <div class="shipping__delivery-times">
+        <div *ngFor="let delivery of deliveryTimes" class="shipping__region">
+          <span class="shipping__region-name">{{ delivery.region }}</span>
+          <span class="shipping__region-time">{{ delivery.time }}</span>
+        </div>
+      </div>
+  
+      <div class="shipping__contact">
+        <p>
+          If you have any questions or concerns regarding your order please let us know via 
+          <span class="shipping__email">info&#64;starbeachwear.com</span> 
+          and we'll get back to you within 24 hours.
+        </p>
+      </div>
+    </div>
+  </div>
