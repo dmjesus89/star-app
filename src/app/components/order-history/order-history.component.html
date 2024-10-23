@@ -1,0 +1,58 @@
+<!-- src/app/components/order-history/order-history.component.html -->
+<div class="order-history">
+    <div class="section-header">
+      <h2>Order History</h2>
+    </div>
+  
+    <div class="orders-container" *ngIf="!loading; else loadingTemplate">
+      <div class="order-card" *ngFor="let order of orders">
+        <div class="order-header">
+          <div class="order-info">
+            <span class="order-number">Order #{{order.id}}</span>
+            <span class="order-date">{{order.createdAt | date}}</span>
+          </div>
+          <span class="order-status" [ngClass]="getOrderStatusClass(order.status)">
+            {{order.status}}
+          </span>
+        </div>
+  
+        <div class="order-items">
+          <div class="order-item" *ngFor="let item of order.items">
+            <img [src]="item.imageUrl" [alt]="item.name">
+            <div class="item-details">
+              <h4>{{item.name}}</h4>
+              <p class="item-meta">
+                Quantity: {{item.quantity}} | Size: {{item.size}}
+                <span *ngIf="item.color">| Color: {{item.color}}</span>
+              </p>
+              <p class="item-price">${{item.price}}</p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="order-footer">
+          <div class="order-total">
+            <span>Total:</span>
+            <span class="total-amount">${{order.total}}</span>
+          </div>
+          <button class="btn-secondary" [routerLink]="['/orders', order.id]">
+            View Details
+          </button>
+        </div>
+      </div>
+  
+      <div class="no-orders" *ngIf="orders.length === 0">
+        <i class="fas fa-shopping-bag"></i>
+        <h3>No orders yet</h3>
+        <p>When you make your first purchase, it will appear here.</p>
+        <button routerLink="/" class="btn-primary">Start Shopping</button>
+      </div>
+    </div>
+  
+    <ng-template #loadingTemplate>
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        Loading orders...
+      </div>
+    </ng-template>
+  </div>

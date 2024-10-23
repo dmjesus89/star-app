@@ -1,0 +1,158 @@
+// src/app/components/product-card/product-card.component.scss
+@import '../../../variables.scss';
+
+.product-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    .product-card__overlay {
+      opacity: 1;
+    }
+  }
+
+  &__image {
+    position: relative;
+    padding-top: 125%; // 4:5 aspect ratio
+    
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &__info {
+    padding: 1rem;
+
+    h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.price-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+  .price {
+    font-weight: bold;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  .compare-price {
+    text-decoration: line-through;
+    color: $secondary-color;
+    font-size: 0.9em;
+    margin: 0;
+  }
+}
+
+.variants {
+  margin-top: 0.5rem;
+
+  .colors {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+
+    .color-dot {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+
+    .size-badge {
+      padding: 0.25rem 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: $primary-color;
+        color: white;
+        border-color: $primary-color;
+      }
+    }
+  }
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+
+  .stars {
+    color: #ffd700;
+    letter-spacing: -2px;
+  }
+
+  .rating-value {
+    font-weight: bold;
+  }
+
+  .rating-count {
+    color: $secondary-color;
+    font-size: 0.9em;
+  }
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  padding: 0.5rem;
+  background: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background: darken($primary-color, 10%);
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+}

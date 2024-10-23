@@ -1,0 +1,217 @@
+/* src/app/pages/profile/profile.component.scss */
+@import '../../../variables.scss';
+@import '../../../mixins.scss';
+
+.profile-page {
+  padding: $spacing-xl 0;
+  background-color: $background-light;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-md;
+  }
+
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: $spacing-xl;
+
+    @include responsive($mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .profile-sidebar {
+    .user-info {
+      text-align: center;
+      padding: $spacing-lg;
+      background: $white;
+      border-radius: $border-radius;
+      @include card-shadow;
+
+      .avatar {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto $spacing-md;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      h3 {
+        font-size: $font-large;
+        margin-bottom: $spacing-sm;
+      }
+    }
+
+    .profile-nav {
+      margin-top: $spacing-lg;
+      background: $white;
+      border-radius: $border-radius;
+      @include card-shadow;
+
+      button {
+        width: 100%;
+        text-align: left;
+        padding: $spacing-md;
+        border: none;
+        background: none;
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        color: $text-color;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: $background-light;
+        }
+
+        &.active {
+          background: $primary-color;
+          color: $white;
+        }
+
+        i {
+          width: 20px;
+        }
+      }
+    }
+  }
+
+  .profile-content {
+    background: $white;
+    border-radius: $border-radius;
+    padding: $spacing-xl;
+    @include card-shadow;
+
+    .section-header {
+      @include flex-between;
+      margin-bottom: $spacing-xl;
+
+      h2 {
+        font-size: $font-xlarge;
+        color: $text-color;
+      }
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-lg;
+
+      @include responsive($mobile) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: $spacing-md;
+
+      label {
+        display: block;
+        margin-bottom: $spacing-sm;
+        color: $text-secondary;
+      }
+
+      input {
+        width: 100%;
+        padding: $spacing-sm;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+
+    .preferences-section {
+      margin-top: $spacing-xl;
+      
+      h3 {
+        margin-bottom: $spacing-md;
+      }
+
+      .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+
+        label {
+          display: flex;
+          align-items: center;
+          gap: $spacing-sm;
+        }
+      }
+    }
+
+    .form-actions {
+      margin-top: $spacing-xl;
+      display: flex;
+      gap: $spacing-md;
+
+      button {
+        padding: $spacing-sm $spacing-lg;
+        border-radius: $border-radius;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.save-btn {
+          background: $primary-color;
+          color: $white;
+
+          &:hover {
+            background: darken($primary-color, 10%);
+          }
+
+          &:disabled {
+            background: $text-secondary;
+            cursor: not-allowed;
+          }
+        }
+
+        &.cancel-btn {
+          background: $background-light;
+          color: $text-color;
+
+          &:hover {
+            background: darken($background-light, 10%);
+          }
+        }
+      }
+    }
+
+    .profile-info {
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-lg;
+
+        @include responsive($mobile) {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .info-item {
+        .label {
+          display: block;
+          color: $text-secondary;
+          margin-bottom: $spacing-sm;
+        }
+
+        .value {
+          font-size: $font-medium;
+          color: $text-color;
+        }
+      }
+    }
+  }
+}

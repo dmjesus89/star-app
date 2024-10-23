@@ -1,0 +1,26 @@
+<div class="product-list">
+  <h2 class="product-list__title">{{ title }}</h2>
+  
+  <div class="product-list__categories">
+    <button 
+      class="category-btn"
+      [class.active]="!selectedCategory"
+      (click)="selectCategory(null)">
+      All
+    </button>
+    <button 
+      *ngFor="let category of categories"
+      class="category-btn"
+      [class.active]="selectedCategory === category"
+      (click)="selectCategory(category)">
+      {{ category }}
+    </button>
+  </div>
+
+  <div class="product-list__grid">
+    <app-product-card
+      *ngFor="let product of filteredProducts"
+      [product]="product">
+    </app-product-card>
+  </div>
+</div>

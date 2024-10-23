@@ -1,0 +1,42 @@
+<!-- src/app/pages/checkout/checkout.component.html -->
+<div class="checkout-page">
+    <div class="container">
+      <h1>Checkout</h1>
+  
+      <div class="checkout-content">
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="checkout-form">
+          <!-- Shipping Information -->
+          <div class="form-section" formGroupName="shipping">
+            <h2>Shipping Information</h2>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input id="firstName" formControlName="firstName" type="text">
+              </div>
+              <!-- Add other shipping fields -->
+            </div>
+          </div>
+  
+          <!-- Payment Information -->
+          <div class="form-section" formGroupName="payment">
+            <h2>Payment Information</h2>
+            <div class="form-group">
+              <label for="cardNumber">Card Number</label>
+              <input id="cardNumber" formControlName="cardNumber" type="text">
+            </div>
+            <!-- Add other payment fields -->
+          </div>
+  
+          <button type="submit" class="submit-btn" [disabled]="checkoutForm.invalid || loading">
+            Complete Order
+          </button>
+        </form>
+  
+        <!-- Order Summary -->
+        <div class="order-summary" *ngIf="cart$ | async as cart">
+          <h2>Order Summary</h2>
+          <!-- Order summary content -->
+        </div>
+      </div>
+    </div>
+  </div>

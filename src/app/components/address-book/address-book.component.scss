@@ -1,0 +1,183 @@
+// src/app/components/address-book/address-book.component.scss
+@import '../../../variables.scss';
+@import '../../../mixins.scss';
+
+.address-book {
+  .addresses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-lg;
+    margin-top: $spacing-lg;
+  }
+
+  .address-card {
+    background: $white;
+    border-radius: $border-radius;
+    padding: $spacing-lg;
+    @include card-shadow;
+    position: relative;
+
+    &.default {
+      border: 2px solid $primary-color;
+
+      .default-badge {
+        position: absolute;
+        top: $spacing-sm;
+        right: $spacing-sm;
+        background: $primary-color;
+        color: $white;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: 12px;
+        font-size: $font-small;
+      }
+    }
+
+    .address-content {
+      margin-bottom: $spacing-lg;
+
+      h4 {
+        font-size: $font-large;
+        margin-bottom: $spacing-sm;
+      }
+
+      p {
+        color: $text-secondary;
+        line-height: 1.5;
+      }
+
+      .phone {
+        margin-top: $spacing-sm;
+        color: $text-color;
+      }
+    }
+
+    .address-actions {
+      display: flex;
+      gap: $spacing-sm;
+
+      button {
+        flex: 1;
+        padding: $spacing-sm;
+        border: none;
+        border-radius: $border-radius;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.edit-btn {
+          background: $blue-light;
+          color: $blue-dark;
+
+          &:hover {
+            background: darken($blue-light, 5%);
+          }
+        }
+
+        &.delete-btn {
+          background: $red-light;
+          color: $red-dark;
+
+          &:hover {
+            background: darken($red-light, 5%);
+          }
+        }
+
+        &.default-btn {
+          background: $gray-light;
+          color: $text-color;
+
+          &:hover {
+            background: darken($gray-light, 5%);
+          }
+        }
+      }
+    }
+  }
+
+  .address-form {
+    background: $white;
+    padding: $spacing-lg;
+    border-radius: $border-radius;
+    margin-bottom: $spacing-xl;
+    @include card-shadow;
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-lg;
+
+      @include responsive($mobile) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: $spacing-md;
+
+      label {
+        display: block;
+        margin-bottom: $spacing-xs;
+        color: $text-secondary;
+      }
+
+      input {
+        width: 100%;
+        padding: $spacing-sm;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: $spacing-md;
+      margin-top: $spacing-lg;
+
+      button {
+        padding: $spacing-sm $spacing-lg;
+        border-radius: $border-radius;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &.save-btn {
+          background: $primary-color;
+          color: $white;
+
+          &:hover {
+            background: darken($primary-color, 10%);
+          }
+        }
+
+        &.cancel-btn {
+          background: $gray-light;
+          color: $text-color;
+
+          &:hover {
+            background: darken($gray-light, 10%);
+          }
+        }
+      }
+    }
+  }
+
+  .add-address-btn {
+    margin-bottom: $spacing-lg;
+    padding: $spacing-sm $spacing-lg;
+    background: $primary-color;
+    color: $white;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: darken($primary-color, 10%);
+    }
+  }
+}

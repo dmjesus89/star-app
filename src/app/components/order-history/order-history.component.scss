@@ -1,0 +1,140 @@
+/* src/app/components/order-history/order-history.component.scss */
+@import '../../../variables.scss';
+@import '../../../mixins.scss';
+
+.order-history {
+  .order-card {
+    background: $white;
+    border-radius: $border-radius;
+    margin-bottom: $spacing-lg;
+    @include card-shadow;
+    
+    .order-header {
+      @include flex-between;
+      padding: $spacing-md;
+      border-bottom: 1px solid $border-color;
+
+      .order-info {
+        .order-number {
+          font-weight: bold;
+          margin-right: $spacing-md;
+        }
+
+        .order-date {
+          color: $text-secondary;
+        }
+      }
+
+      .order-status {
+        padding: $spacing-xs $spacing-sm;
+        border-radius: 20px;
+        font-size: $font-small;
+
+        &.status-pending {
+          background: $yellow-light;
+          color: $yellow-dark;
+        }
+
+        &.status-processing {
+          background: $blue-light;
+          color: $blue-dark;
+        }
+
+        &.status-shipped {
+          background: $purple-light;
+          color: $purple-dark;
+        }
+
+        &.status-delivered {
+          background: $green-light;
+          color: $green-dark;
+        }
+
+        &.status-cancelled {
+          background: $red-light;
+          color: $red-dark;
+        }
+      }
+    }
+
+    .order-items {
+      padding: $spacing-md;
+
+      .order-item {
+        display: flex;
+        align-items: center;
+        padding: $spacing-sm 0;
+        
+        img {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: $border-radius;
+        }
+
+        .item-details {
+          margin-left: $spacing-md;
+
+          h4 {
+            margin-bottom: $spacing-xs;
+          }
+
+          .item-meta {
+            color: $text-secondary;
+            font-size: $font-small;
+          }
+
+          .item-price {
+            font-weight: bold;
+            margin-top: $spacing-xs;
+          }
+        }
+      }
+    }
+
+    .order-footer {
+      @include flex-between;
+      padding: $spacing-md;
+      border-top: 1px solid $border-color;
+      background: $background-light;
+
+      .order-total {
+        .total-amount {
+          font-weight: bold;
+          font-size: $font-large;
+          margin-left: $spacing-sm;
+        }
+      }
+    }
+  }
+
+  .no-orders {
+    text-align: center;
+    padding: $spacing-xl 0;
+
+    i {
+      font-size: 3rem;
+      color: $text-secondary;
+      margin-bottom: $spacing-lg;
+    }
+
+    h3 {
+      margin-bottom: $spacing-sm;
+    }
+
+    p {
+      color: $text-secondary;
+      margin-bottom: $spacing-lg;
+    }
+  }
+
+  .loading-spinner {
+    text-align: center;
+    padding: $spacing-xl 0;
+    color: $text-secondary;
+
+    i {
+      margin-right: $spacing-sm;
+    }
+  }
+}

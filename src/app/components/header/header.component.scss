@@ -1,0 +1,81 @@
+// src/app/components/header/header.component.scss
+@import '../../../variables.scss';
+@import '../../../mixins.scss';
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: $white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.nav {
+  @include container;
+  @include flex-between;
+  height: 80px;
+  
+  &__logo {
+    img {
+      height: 40px;
+    }
+  }
+  
+  &__menu {
+    @include flex-center;
+    gap: 2rem;
+    
+    a {
+      font-weight: 500;
+      color: $text-color;
+      text-decoration: none;
+      transition: color 0.3s;
+      
+      &:hover, &.active {
+        color: $primary-color;
+      }
+    }
+  }
+  
+  &__actions {
+    @include flex-center;
+    gap: 1.5rem;
+  }
+}
+
+.search {
+  position: relative;
+  
+  input {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid $border-color;
+    width: 200px;
+    transition: width 0.3s;
+    
+    &:focus {
+      width: 300px;
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+}
+
+.cart-icon {
+  position: relative;
+  
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: $accent-color;
+    color: $white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    @include flex-center;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,135 @@
+<!-- src/app/pages/profile/profile.component.html -->
+<div class="profile-page">
+    <div class="container">
+      <div class="profile-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="profile-sidebar">
+          <div class="user-info">
+            <div class="avatar">
+              <img [src]="user?.avatarUrl || 'assets/default-avatar.png'" [alt]="user?.firstName">
+            </div>
+            <h3>{{user?.firstName}} {{user?.lastName}}</h3>
+          </div>
+  
+          <nav class="profile-nav">
+            <button 
+              [class.active]="activeTab === 'profile'"
+              (click)="setActiveTab('profile')">
+              <i class="fas fa-user"></i> Profile
+            </button>
+            <button 
+              [class.active]="activeTab === 'orders'"
+              (click)="setActiveTab('orders')">
+              <i class="fas fa-shopping-bag"></i> Orders
+            </button>
+            <button 
+              [class.active]="activeTab === 'addresses'"
+              (click)="setActiveTab('addresses')">
+              <i class="fas fa-map-marker-alt"></i> Addresses
+            </button>
+            <button 
+              [class.active]="activeTab === 'settings'"
+              (click)="setActiveTab('settings')">
+              <i class="fas fa-cog"></i> Settings
+            </button>
+          </nav>
+        </aside>
+  
+        <!-- Main Content Area -->
+        <main class="profile-content">
+          <!-- Profile Information -->
+          <div *ngIf="activeTab === 'profile'" class="profile-section">
+            <div class="section-header">
+              <h2>Profile Information</h2>
+              <button *ngIf="!isEditing" (click)="isEditing = true" class="edit-btn">
+                Edit Profile
+              </button>
+            </div>
+  
+            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="isEditing">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input id="firstName" formControlName="firstName" type="text">
+                </div>
+  
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input id="lastName" formControlName="lastName" type="text">
+                </div>
+  
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input id="email" formControlName="email" type="email">
+                </div>
+  
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input id="phone" formControlName="phone" type="tel">
+                </div>
+  
+                <div class="form-group">
+                  <label for="dateOfBirth">Date of Birth</label>
+                  <input id="dateOfBirth" formControlName="dateOfBirth" type="date">
+                </div>
+              </div>
+  
+              <div formGroupName="preferences" class="preferences-section">
+                <h3>Preferences</h3>
+                <div class="checkbox-group">
+                  <label>
+                    <input type="checkbox" formControlName="newsletter">
+                    Receive newsletter
+                  </label>
+                  <label>
+                    <input type="checkbox" formControlName="smsNotifications">
+                    Receive SMS notifications
+                  </label>
+                </div>
+              </div>
+  
+              <div class="form-actions">
+                <button type="submit" class="save-btn" [disabled]="!profileForm.valid">
+                  Save Changes
+                </button>
+                <button type="button" class="cancel-btn" (click)="isEditing = false">
+                  Cancel
+                </button>
+              </div>
+            </form>
+  
+            <!-- Profile Display View -->
+            <div class="profile-info" *ngIf="!isEditing && user">
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="label">Name</span>
+                  <span class="value">{{user.firstName}} {{user.lastName}}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Email</span>
+                  <span class="value">{{user.email}}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Phone</span>
+                  <span class="value">{{user.phone}}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Date of Birth</span>
+                  <span class="value">{{user.dateOfBirth | date}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Orders Section -->
+          <app-order-history *ngIf="activeTab === 'orders'"></app-order-history>
+  
+          <!-- Addresses Section -->
+          <app-address-book *ngIf="activeTab === 'addresses'"></app-address-book>
+  
+          <!-- Settings Section -->
+          <app-user-settings *ngIf="activeTab === 'settings'"></app-user-settings>
+        </main>
+      </div>
+    </div>
+  </div>
