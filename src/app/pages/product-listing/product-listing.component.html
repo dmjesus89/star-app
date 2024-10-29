@@ -3,13 +3,17 @@
   <div class="breadcrumb">
     <a routerLink="/">Home</a>
     <span class="separator">&gt;</span>
-    <a *ngIf="category" [routerLink]="['/products', category]">
+    <a *ngIf="category" [routerLink]="['/product-listing', category]">
       {{formatBreadcrumb(category)}}
     </a>
-    <ng-container *ngIf="subcategory">
-      <span class="separator">&gt;</span>
-      <span>{{formatBreadcrumb(subcategory)}}</span>
-    </ng-container>
+  </div>
+  <div class="sort-dropdown">
+    <select (change)="onSortChange($event)">
+      <option value="bestsellers">Best Sellers</option>
+      <option value="price-asc">Lowest Price</option>
+      <option value="price-desc">Highest Price</option>
+      <option value="newest">Newest</option>
+    </select>
   </div>
 </div>
 
@@ -18,64 +22,49 @@
   <!-- Filter Section -->
   <div class="filter-section">
     <div class="filter-header">
-      <h2>Filter by</h2>
+      <h2>Filtrar por</h2>
     </div>
     
     <div class="price-filter">
-      <h3>Price</h3>
-      <div class="labels">
-        <label>From</label>
-        <label>Until</label>
-      </div>
+      <h3>Preço</h3>
       <div class="price-inputs">
+        <label>De:</label>
         <div class="input-group">
-          <input type="number" [value]="minPrice" (input)="updateMinPrice($event)" placeholder="0">
+          <input 
+            type="number" 
+            [value]="minPrice" 
+            (input)="updateMinPrice($event)" 
+            placeholder="59">
         </div>
+        <label>Até:</label>
         <div class="input-group">
-          <input type="number" [value]="maxPrice" (input)="updateMaxPrice($event)" placeholder="1000">
+          <input 
+            type="number" 
+            [value]="maxPrice" 
+            (input)="updateMaxPrice($event)" 
+            placeholder="125">
         </div>
-        <button class="filter-button">
-          <span class="material-icons">chevron_right</span>
-        </button>
       </div>
     </div>
-
   </div>
 
   <!-- Products Section -->
   <div class="products-section">
-    <div class="products-header">
-      <div class="sort-dropdown">
-        <select (change)="onSortChange($event)">
-          <option value="bestsellers">Best Sellers</option>
-          <option value="price-asc">Lowest Price</option>
-          <option value="price-desc">Highest Price</option>
-          <option value="newest">Newest</option>
-        </select>
+    <ng-container *ngIf="filteredProducts.length > 0; else noResults">
+      <div class="products-grid">
+        <app-product-card
+          *ngFor="let product of filteredProducts"
+          [product]="product"
+          (buy)="addToCart($event)"
+          (quickView)="quickView($event)">
+        </app-product-card>
       </div>
-    </div>
-
-    <div class="products-grid">
-      <div *ngFor="let product of filteredProducts" class="product-card">
-        <div class="discount-badge" *ngIf="product.discount">
-          {{product.discount}}% OFF
-        </div>
-        <img [src]="product.imageUrl" [alt]="product.name">
-        <div class="product-info">
-          <h3>{{product.name}}</h3>
-          <div class="price-info">
-            <span class="original-price" *ngIf="product.discount">
-              ${{product.originalPrice.toFixed(2)}}
-            </span>
-            <span class="current-price">
-              ${{product.currentPrice.toFixed(2)}}
-            </span>
-          </div>
-          <div class="installment-info">
-            {{product.installments.number}}x of ${{product.installments.value.toFixed(2)}} interest-free
-          </div>
-        </div>
+    </ng-container>
+    
+    <ng-template #noResults>
+      <div class="no-results">
+        <p>Não temos resultados para sua pesquisa.</p>
       </div>
-    </div>
+    </ng-template>
   </div>
 </div>

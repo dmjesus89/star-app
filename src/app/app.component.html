@@ -1,22 +1,5 @@
-<div class="app-container" [class.loading]="isLoading">
-  <!-- Loading Progress Bar -->
-  <mat-progress-bar 
-    *ngIf="isLoading" 
-    mode="indeterminate" 
-    class="loading-bar"
-  ></mat-progress-bar>
-
-  <!-- Header -->
+<div class="app-container">
   <app-header></app-header>
-
-  <!-- Main Content -->
-  <main class="main-content">
-    <!-- This div helps with the header offset -->
-    <div class="content-wrapper">
-      <router-outlet></router-outlet>
-    </div>
-  </main>
-
-  <!-- Footer -->
+  <router-outlet></router-outlet>
   <app-footer></app-footer>
 </div>

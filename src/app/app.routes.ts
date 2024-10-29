@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 
 export const routes: Routes = [
   {
@@ -32,7 +33,7 @@ export const routes: Routes = [
         .then(m => m.ShippingPolicyComponent)
   },
   { 
-    path: 'products',
+    path: 'product-listing',
     children: [
       { 
         path: '',
@@ -51,6 +52,27 @@ export const routes: Routes = [
         loadComponent: () => 
           import('./pages/product-listing/product-listing.component')
             .then(m => m.ProductListingComponent)
+      },
+    ]
+  },
+  {
+    path: 'product/:id',
+    loadComponent: () => 
+      import('./components/product-detail/product-detail.component')
+        .then(m => m.ProductDetailComponent)
+  },
+  {
+    path: 'account',
+    children: [
+      {
+        path: 'login',
+        loadComponent: () => import('./pages/login/login.component')
+          .then(m => m.LoginComponent)
+      },
+      {
+        path: 'register',
+        loadComponent: () => import('./pages/register/register.component')
+          .then(m => m.RegisterComponent)
       }
     ]
   },

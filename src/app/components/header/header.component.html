@@ -1,66 +1,8 @@
 <header class="header">
-      <nav class="nav">
-        <div class="nav__logo">
-          <a routerLink="/">
-            <img src="assets/images/star-logo.svg" alt="Star Footvolley" class="logo-image">
-          </a>
-        </div>
-
-        <div class="nav__menu">
-          <div class="menu-item" 
-               [class.active]="activeMenu === 'men'"
-               (mouseenter)="showMenu('men')"
-               (mouseleave)="hideMenu()">
-            <a (click)="navigateToCategory('men')" style="cursor: pointer;">MEN</a>
-            <div class="dropdown-menu" *ngIf="activeMenu === 'men'">
-              <a *ngFor="let item of menItems" 
-                 (click)="navigateToSubcategory('men', formatRoute(item))"
-                 class="dropdown-item">
-                {{item}}
-              </a>
-            </div>
-          </div>
-
-          <div class="menu-item"
-               [class.active]="activeMenu === 'women'"
-               (mouseenter)="showMenu('women')"
-               (mouseleave)="hideMenu()">
-            <a (click)="navigateToCategory('women')" style="cursor: pointer;">WOMEN</a>
-            <div class="dropdown-menu" *ngIf="activeMenu === 'women'">
-              <a *ngFor="let item of womenItems" 
-                 (click)="navigateToSubcategory('women', formatRoute(item))"
-                 class="dropdown-item">
-                {{item}}
-              </a>
-            </div>
-          </div>
-
-          <a (click)="navigateToCategory('accessories')" style="cursor: pointer;">ACCESSORIES</a>
-        </div>
-
-        <div class="nav__actions">
-          <div class="search">
-            <input type="search" placeholder="Search..." />
-          </div>
-
-          <a routerLink="/cart" class="cart-icon">
-            <mat-icon matBadge="1">shopping_cart</mat-icon>
-          </a>
-
-          <ng-container *ngIf="isLoggedIn$ | async; else loginButton">
-            <button class="account-btn" [matMenuTriggerFor]="menu">
-              <i class="fas fa-user"></i>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item routerLink="/profile">Profile</button>
-              <button mat-menu-item routerLink="/orders">Orders</button>
-              <button mat-menu-item (click)="logout()">Logout</button>
-            </mat-menu>
-          </ng-container>
-
-          <ng-template #loginButton>
-            <a class="login-btn" (click)="login()" style="cursor: pointer;">Login</a>
-          </ng-template>
-        </div>
-      </nav>
-    </header>
+  <div class="header-main">
+    <app-logo></app-logo>
+    <app-search-bar></app-search-bar>
+    <app-utilities></app-utilities>
+  </div>
+  <app-navigation></app-navigation>
+</header>

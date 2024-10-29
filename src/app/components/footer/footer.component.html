@@ -1,83 +1,72 @@
 <footer class="footer">
-    <div class="footer__content">
-      <div class="footer__section">
-        <h3 class="footer__title">Follow Us</h3>
-        <div class="footer__social">
-          <a 
-            *ngFor="let social of socialLinks"
-            [href]="social.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer__social-link"
-            [attr.aria-label]="social.name"
+  <div class="footer__content">
+    <div class="footer__section">
+      <h3 class="footer__title">Follow Us</h3>
+      <div class="footer__social">
+        <a 
+          *ngFor="let social of activeSocialLinks"
+          [href]="social.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer__social-link"
+          [attr.aria-label]="social.name"
+        >
+          <svg 
+            viewBox="0 0 24 24" 
+            width="24" 
+            height="24" 
+            fill="currentColor"
           >
-            <svg 
-              viewBox="0 0 24 24" 
-              width="24" 
-              height="24" 
-              fill="currentColor"
-            >
-              <path [attr.d]="social.icon"/>
-            </svg>
-            <span>{{ social.name }}</span>
-          </a>
-        </div>
-      </div>
-  
-      <div class="footer__section">
-        <h3 class="footer__title">Our Policies</h3>
-        <ul class="footer__list">
-          <li><a routerLink="/refund-policy" (click)="scrollToTop()">Refund Policy</a></li>
-          <li><a routerLink="/privacy-policy" (click)="scrollToTop()">Privacy Policy</a></li>
-          <li><a routerLink="/terms-of-service" (click)="scrollToTop()">Terms of Service</a></li>
-          <li><a routerLink="/shipping-policy" (click)="scrollToTop()">Shipping Policy</a></li>
-        </ul>
-      </div>
-  
-      <div class="footer__section">
-        <h3 class="footer__title">Contact Us</h3>
-        <ul class="footer__list footer__contact">
-          <li>
-            <mat-icon>location_on</mat-icon>
-            <span>123 Fashion Street, NY 10001</span>
-          </li>
-          <li>
-            <mat-icon>phone</mat-icon>
-            <span>+1 (555) 123-4567</span>
-          </li>
-          <li>
-            <mat-icon>email</mat-icon>
-            <span>contact&#64;starclothing.com</span>
-          </li>
-        </ul>
+            <path [attr.d]="social.icon"/>
+          </svg>
+          <span>{{ social.name }}</span>
+        </a>
       </div>
     </div>
-  
-    <!-- Bottom Section -->
-    <div class="footer__bottom">
-      <div class="footer__bottom-content">
-        <!-- Payment Methods -->
-        <div class="footer__payment">
-          <p class="footer__payment-title">Accepted Payment Methods:</p>
-          <div class="footer__payment-icons">
-            <div 
-              *ngFor="let method of paymentMethods" 
-              class="footer__payment-icon"
-              [attr.aria-label]="method.name"
-            >
-              <img 
-                [src]="method.icon" 
-                [alt]="method.name"
-                class="payment-icon"
-              />
-            </div>
+
+    <div class="footer__section">
+      <h3 class="footer__title">Our Policies</h3>
+      <ul class="footer__list">
+        <li><a routerLink="/refund-policy" (click)="scrollToTop()">Refund Policy</a></li>
+        <li><a routerLink="/privacy-policy" (click)="scrollToTop()">Privacy Policy</a></li>
+        <li><a routerLink="/terms-of-service" (click)="scrollToTop()">Terms of Service</a></li>
+        <li><a routerLink="/shipping-policy" (click)="scrollToTop()">Shipping Policy</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__section">
+      <h3 class="footer__title">Contact Us</h3>
+      <ul class="footer__list footer__contact">
+        <li *ngFor="let contact of activeContactMethods">
+          <mat-icon>{{contact.name}}</mat-icon>
+          <span>{{contact.description}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="footer__bottom-content">
+      <div class="footer__payment">
+        <p class="footer__payment-title">Accepted Payment Methods:</p>
+        <div class="footer__payment-icons">
+          <div 
+            *ngFor="let method of activePaymentMethods" 
+            class="footer__payment-icon"
+            [attr.aria-label]="method.name"
+          >
+            <img 
+              [src]="method.icon" 
+              [alt]="method.name"
+              class="payment-icon"
+            />
           </div>
-        </div>  <!-- Added missing closing div for footer__payment -->
-  
-        <!-- Copyright -->
-        <div class="footer__copyright">
-          <p>&copy; {{currentYear}} STAR Clothing. All rights reserved.</p>
         </div>
       </div>
+
+      <div class="footer__copyright">
+        <p>&copy; {{currentYear}} STAR Clothing. All rights reserved.</p>
+      </div>
     </div>
-  </footer>
+  </div>
+</footer>
