@@ -1,0 +1,115 @@
+<!-- Cart notification -->
+<div class="cart-notification" *ngIf="showCartNotification">
+  <div class="notification-content">
+    <div class="product-info">
+      <img [src]="product?.imageUrl" [alt]="product?.name">
+      <div class="info">
+        <h3>{{ product?.name }} ({{ selectedSize }})</h3>
+        <p>{{ quantity }} x R$ {{ product?.currentPrice?.toFixed(2) }}</p>
+      </div>
+      <button class="close-button" (click)="showCartNotification = false">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="cart-total">
+      <p>Total ({{ quantity }} produto{{ quantity > 1 ? 's' : '' }}):</p>
+      <p class="total-price">R$ {{ (product?.currentPrice || 0) * quantity | number:'1.2-2' }}</p>
+    </div>
+    <button class="view-cart-button" routerLink="/carrinho">VER CARRINHO</button>
+  </div>
+</div>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <ng-container *ngFor="let item of breadcrumbs; let last = last">
+    <ng-container *ngIf="!last; else lastItem">
+      <a [routerLink]="item.url">{{ item.label }}</a>
+      <span class="separator">&gt;</span>
+    </ng-container>
+    <ng-template #lastItem>
+      <span class="active">{{ item.label }}</span>
+    </ng-template>
+  </ng-container>
+</div>
+
+<div class="product-detail">
+  <div class="product-images">
+    <div class="thumbnails">
+      <div class="thumbnail">
+        <img [src]="product?.imageUrl" [alt]="product?.name">
+      </div>
+    </div>
+    <div class="main-image">
+      <img [src]="product?.imageUrl" [alt]="product?.name">
+      <div class="discount-badge" *ngIf="product?.discount">
+        {{ product?.discount }}% OFF
+      </div>
+    </div>
+  </div>
+
+  <div class="product-info">
+    <h1 class="product-name">{{ product?.name }}</h1>
+    
+    <div class="price-container">
+      <div class="regular-price">
+        <span class="old-price" *ngIf="product?.originalPrice && product?.originalPrice !== product?.currentPrice ">
+          R$ {{ product?.originalPrice?.toFixed(2) }}
+        </span>
+        <span class="current-price">R$ {{ product?.currentPrice?.toFixed(2) }}</span>
+      </div>
+      <div class="installments" *ngIf="product?.installments">
+        {{ product?.installments?.number }}x de R$ {{ product?.installments?.value?.toFixed(2) }}
+        <span class="no-interest">sem juros</span>
+      </div>
+    </div>
+
+    <ng-container *ngIf="isProductAvailable; else productUnavailable">
+      <!-- Size Selection -->
+      <div class="size-selection">
+        <h3>TAMANHO</h3>
+        <div class="size-options">
+          <button class="size-button" 
+                  [class.selected]="selectedSize === size"
+                  *ngFor="let size of product?.sizes"
+                  (click)="selectedSize = size">
+            {{ size }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Quantity and Add to Cart -->
+      <div class="purchase-actions">
+        <div class="quantity-selector">
+          <button (click)="decrementQuantity()">-</button>
+          <input type="number" [(ngModel)]="quantity" readonly>
+          <button (click)="incrementQuantity()">+</button>
+        </div>
+      </div>
+
+      <button class="add-to-cart-button" (click)="addToCart()" [disabled]="!product || !selectedSize">
+        COMPRAR
+      </button>
+    </ng-container>
+
+    <ng-template #productUnavailable>
+      <div class="unavailable-message">
+        <p>Produto indisponível</p>
+      </div>
+    </ng-template>
+
+    <!-- Shipping Info -->
+    <div class="shipping-info">
+      <h3>
+        <span class="material-icons">local_shipping</span>
+        Meios de envio
+      </h3>
+      <div class="shipping-calculator">
+        <input type="text" [(ngModel)]="cep" placeholder="Seu CEP" maxlength="8">
+        <button (click)="calculateShipping()">CALCULAR</button>
+      </div>
+      <a href="http://www.buscacep.correios.com.br" target="_blank" class="cep-finder">
+        Não sei meu CEP
+      </a>
+    </div>
+  </div>
+</div>

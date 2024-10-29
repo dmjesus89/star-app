@@ -1,0 +1,74 @@
+<div class="cart-sidebar">
+    <div class="cart-header">
+      <h2>Carrinho de Compras</h2>
+      <button class="close-button" (click)="close.emit()">
+        <span class="material-icons">×</span>
+      </button>
+    </div>
+
+    <div class="cart-items">
+      <div class="cart-item" *ngFor="let item of cartItems">
+        <div class="item-image">
+          <img [src]="item.imageUrl" [alt]="item.name">
+        </div>
+        <div class="item-details">
+          <h3>{{ item.name }}</h3>
+          <div class="item-price">
+            <span class="current-price">R${{ item.price.toFixed(2) }}</span>
+            <span class="discount" *ngIf="item.discount">-{{ item.discount }}%</span>
+          </div>
+          <div class="quantity-controls">
+            <button (click)="updateQuantity(item, -1)">-</button>
+            <input type="number" [(ngModel)]="item.quantity" readonly>
+            <button (click)="updateQuantity(item, 1)">+</button>
+          </div>
+        </div>
+        <button class="remove-item" (click)="removeItem(item)">
+          <span class="material-icons">delete</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="free-shipping-info" *ngIf="getRemainingForFreeShipping() > 0">
+      Ganhe frete grátis com mais R${{ getRemainingForFreeShipping().toFixed(2) }}
+    </div>
+
+    <div class="cart-summary">
+      <div class="subtotal">
+        <span>Subtotal (sem frete):</span>
+        <span>R${{ getSubtotal().toFixed(2) }}</span>
+      </div>
+
+      <div class="shipping-calculator">
+        <div class="shipping-input">
+          <input type="text" [(ngModel)]="cep" placeholder="Seu CEP" maxlength="8">
+          <button (click)="calculateShipping()">CALCULAR</button>
+        </div>
+        <a href="#" class="cep-link">Não sei meu CEP</a>
+        
+        <div class="shipping-option" *ngIf="cep">
+          <input type="radio" checked>
+          <label>Proalto - Rua Eugênio Trevisan, 130, Vinhedo</label>
+          <span class="shipping-price">Grátis</span>
+        </div>
+      </div>
+
+      <div class="total">
+        <span>Total:</span>
+        <div class="total-value">
+          <span class="amount">R${{ getTotal().toFixed(2) }}</span>
+          <span class="installments">Ou até 3 x de R${{ (getTotal() / 3).toFixed(2) }} sem juros</span>
+        </div>
+      </div>
+
+      <button class="checkout-button" (click)="checkout()">
+        INICIAR COMPRA
+      </button>
+
+      <button class="quick-buy-button">
+        Compra rápida com <img src="path-to-nuvem-logo.png" alt="Nuvem">
+      </button>
+
+      <a class="continue-shopping" routerLink="/">Ver mais produtos</a>
+    </div>
+  </div>

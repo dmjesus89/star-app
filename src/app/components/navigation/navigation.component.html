@@ -1,0 +1,28 @@
+<nav class="nav-menu">
+  <ul class="menu-list">
+    <li *ngFor="let item of menuItems" 
+        class="menu-item-wrapper"
+        [class.has-dropdown]="item.hasDropdown"
+        [class.active]="activeItem === item">
+      
+      <a [routerLink]="['/product-listing', item.link]" 
+         class="menu-item"
+         (click)="onMenuClick(item)">
+        {{item.label}}
+        <i class="fas fa-chevron-down" *ngIf="item.hasDropdown"></i>
+      </a>
+
+      <div class="dropdown-menu" *ngIf="item.hasDropdown">
+        <div class="dropdown-bridge"></div>
+        <ul class="submenu-list">
+          <li *ngFor="let child of item.children">
+            <a (click)="onSubcategoryClick(item.link, child.link)" 
+               class="submenu-item">
+              {{child.label}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</nav>

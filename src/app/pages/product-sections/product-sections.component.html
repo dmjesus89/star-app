@@ -1,0 +1,29 @@
+<div class="product-sections-container">
+  <section *ngFor="let section of sections" class="section-featured">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="h1">{{ section.title }}</h2>
+        </div>
+
+        <div class="col-12">
+          <div class="swiper-container" [id]="'swiper-' + section.id">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" *ngFor="let product of section.products">
+                <app-product-card
+                  [product]="product"
+                  (buy)="addToCart($event)"
+                  (quickView)="quickView($event)">
+                </app-product-card>
+              </div>
+            </div>
+
+            
+            <div class="swiper-button-prev" [id]="'prev-' + section.id"></div>
+            <div class="swiper-button-next" [id]="'next-' + section.id"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

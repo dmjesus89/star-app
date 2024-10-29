@@ -1,0 +1,48 @@
+<div class="product-card">
+  <!-- Image Container -->
+  <div class="image-container">
+    <a [routerLink]="['/product', product.id]">
+      <img [src]="product.imageUrl" [alt]="product.name" class="product-img">
+    </a>
+    
+    <div class="discount-badge" *ngIf="product.discount">
+      <span>{{product.discount}}% OFF</span>
+    </div>
+  </div>
+
+  <!-- Product Info -->
+  <div class="product-info">
+    <a [routerLink]="['/product', product.id]" class="product-link">
+      <h3 class="product-name">{{ product.name }}</h3>
+      
+      <div class="price-container">
+        <span class="original-price" *ngIf="product.oldPrice">
+          {{ formatPrice(product.oldPrice) }}
+        </span>
+        <span class="current-price">
+          {{ formatPrice(product.price) }}
+        </span>
+      </div>
+
+      <div class="installment-info" *ngIf="product.installments">
+        <span>{{product.installments.quantity}}x de </span>
+        <span>{{ formatPrice(product.installments.value) }}</span>
+        <span class="no-interest">sem juros</span>
+      </div>
+    </a>
+
+    <!-- Action Buttons -->
+    <div class="product-actions">
+      <div class="action-buttons">
+        <button class="btn-primary" (click)="onBuyClick()">
+          Comprar
+        </button>
+        <button class="btn-secondary" (click)="onQuickViewClick()">
+          <i class="fas fa-eye"></i>
+          <span class="quick-view-text" [routerLink]="['/product', product.id]">Espiar
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

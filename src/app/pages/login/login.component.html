@@ -1,0 +1,45 @@
+<div class="login-container">
+    <div class="login-box">
+      <h2 class="login-title">Iniciar sessão</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Digite seu email"
+          />
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="error-message">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">Email é obrigatório</span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Email inválido</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Digite sua senha"
+          />
+          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="error-message">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']">Senha é obrigatória</span>
+            <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Senha deve ter no mínimo 6 caracteres</span>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-button" [disabled]="loginForm.invalid">
+          Entrar
+        </button>
+
+        <div class="form-footer">
+          <a routerLink="/account/register" class="register-link">Criar uma conta</a>
+          <a routerLink="/account/forgot-password" class="forgot-password-link">Esqueceu a senha?</a>
+        </div>
+      </form>
+    </div>
+  </div>

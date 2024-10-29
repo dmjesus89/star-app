@@ -1,0 +1,37 @@
+@mixin responsive-styles {
+    @media (max-width: 1024px) {
+      .header-main {
+        padding: 15px;
+      }
+  
+      .utilities {
+        gap: 20px;
+      }
+  
+      .menu-list {
+        gap: 20px;
+        padding: 0 15px;
+        flex-wrap: wrap;
+      }
+    }
+  
+    @media (max-width: 768px) {
+      .header-main {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+  
+      .search-container {
+        order: 3;
+        max-width: 100%;
+      }
+  
+      .utilities {
+        order: 2;
+      }
+  
+      .nav-menu {
+        display: none;
+      }
+    }
+  }

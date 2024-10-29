@@ -1,0 +1,43 @@
+<div class="utilities-container">
+  <!-- Support/Service Dropdown -->
+  <div class="utility-item" [class.active]="showSupport">
+    <button class="utility-button" (click)="toggleSupport($event)">
+      <i class="utility-icon fas fa-comments"></i>
+      <span class="utility-label">Atendimento</span>
+    </button>
+    <div class="dropdown-menu" [class.show]="showSupport">
+      <a [href]="getWhatsAppLink()" class="dropdown-item">
+        <i class="fab fa-whatsapp"></i>
+        <span>{{contactInfo.whatsapp.formattedNumber}}</span>
+      </a>
+      <a [href]="getEmailLink()" class="dropdown-item">
+        <i class="fas fa-envelope"></i>
+        <span>{{contactInfo.email.address}}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Account Dropdown -->
+  <div class="utility-item" [class.active]="showAccount">
+    <button class="utility-button" (click)="toggleAccount($event)">
+      <i class="utility-icon fas fa-user"></i>
+      <span class="utility-label">Minha conta</span>
+    </button>
+    <div class="dropdown-menu" [class.show]="showAccount">
+      <a routerLink="/account/register" class="dropdown-item">Criar uma conta</a>
+      <a routerLink="/account/login" class="dropdown-item">Iniciar sessão</a>
+    </div>
+  </div>
+
+  <!-- Cart Button -->
+  <div class="utility-item">
+    <button class="utility-button" (click)="toggleCart($event)">
+      <i class="utility-icon fas fa-shopping-cart"></i>
+      <span class="utility-label">Meu carrinho</span>
+      <span class="cart-badge" *ngIf="cartCount > 0">{{cartCount}}</span>
+    </button>
+  </div>
+
+
+
+</div>
