@@ -57,7 +57,8 @@ export class ProductListingComponent implements OnInit {
       installments: {
         quantity: product.installments.number,
         value: product.installments.value
-      }
+      },
+      sizes: product.sizes,
     };
   }
 

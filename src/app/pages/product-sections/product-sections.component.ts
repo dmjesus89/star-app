@@ -130,7 +130,8 @@ export class ProductSectionsComponent implements OnInit, AfterViewInit, OnDestro
       installments: {
         quantity: product.installments.number,
         value: product.installments.value
-      }
+      },
+      sizes: product.sizes,
     };
   }
 

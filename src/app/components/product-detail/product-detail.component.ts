@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
+import { Subject, takeUntil } from 'rxjs'
+import { CartService,CartItem } from '../../services/cart.service';
+
 
 interface BreadcrumbItem {
   label: string;
@@ -23,12 +26,22 @@ export class ProductDetailComponent implements OnInit {
   showCartNotification = false;
   cep: string = '';
   breadcrumbs: BreadcrumbItem[] = [];
-  isProductAvailable = false; // Initialize as false
+  isProductAvailable = false;
+  private readonly CART_NOTIFICATION_DURATION = 3000; 
+  loading = true;
+  error: string | null = null;
+
+
+  private destroy$ = new Subject<void>();
+
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
+
+  
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -99,23 +112,45 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  addToCart(): void {
-    if (!this.product || !this.isProductAvailable) return;
+  get cartCount(): number {
+    return this.cartService.getCartCount();
+  }
 
-    const cartItem = {
-      productId: this.product.id,
+  get cartTotal(): number {
+    return this.cartService.getSubtotal();
+  }
+
+  addToCart(): void {
+     if (!this.product || !this.isProductAvailable || !this.selectedSize) {
+     console.log('Please select a size before adding to cart');
+      return;
+    }
+
+    const cartItem : CartItem = {
+      id: this.product.id,
+      name: this.product.name,
+      imageUrl: this.product.imageUrl,
+      price: this.product.currentPrice,
+      originalPrice: this.product.originalPrice || this.product.currentPrice,
       quantity: this.quantity,
       size: this.selectedSize,
-      price: this.product.currentPrice,
-      name: this.product.name,
-      image: this.product.imageUrl
     };
 
     console.log('Adding to cart:', cartItem);
-    
+
+      this.cartService.addToCart(cartItem);
+      this.showCartSuccess();
+ 
+  }
+
+  private showCartSuccess(): void {
     this.showCartNotification = true;
     setTimeout(() => {
       this.showCartNotification = false;
-    }, 3000);
+    }, this.CART_NOTIFICATION_DURATION);
   }
+
+
+
+
 }

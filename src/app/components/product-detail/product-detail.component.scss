@@ -1,3 +1,8 @@
+
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+
 .product-detail {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -61,8 +66,8 @@
 
       .discount-badge {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 12px;
+        right: 12px;
         background: #000;
         color: white;
         width: 45px;
@@ -71,8 +76,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
+        font-size: 10px;
         font-weight: 500;
+        z-index: 2;
       }
     }
   }
@@ -273,9 +279,23 @@
     }
 
     .close-button {
-      background: none;
+      position: absolute;
+      top: -12px;    // Move up slightly to match design
+      right: -12px;  // Move right slightly to match design
+      width: 24px;   // Fixed width
+      height: 24px;  // Fixed height
+      background: #000;  // Black background
       border: none;
+      border-radius: 50%;
       cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      z-index: 2;
+      
     }
   }
 
@@ -317,5 +337,220 @@
 
   .separator {
     color: #666;
+  }
+}
+
+
+// Variables
+$primary-color: #000;
+$secondary-color: #666;
+$accent-color: #4a90e2;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$light-gray: #f5f5f5;
+$border-color: #ddd;
+$white: #fff;
+
+// Spacing
+$spacing-xs: 0.5rem;
+$spacing-sm: 1rem;
+$spacing-md: 1.5rem;
+$spacing-lg: 2rem;
+$spacing-xl: 3rem;
+
+// Breakpoints
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 1024px;
+$widescreen: 1200px;
+
+// Mixins
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  @if $gap > 0 {
+    gap: $gap;
+  }
+}
+
+@mixin grid($columns: 1, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+@mixin responsive($breakpoint) {
+  @media (max-width: $breakpoint) {
+    @content;
+  }
+}
+
+// Button Styles
+@mixin button-base {
+  padding: $spacing-sm $spacing-md;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+
+// Product Description Styles
+.product-description {
+  max-width: $widescreen;
+  margin: 0 auto;
+  padding: $spacing-lg;
+
+  // Collection Header
+  .collection-header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    padding: $spacing-xl 0;
+    background: linear-gradient(to right, $light-gray, $white);
+    
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: $spacing-md;
+      color: $primary-color;
+    }
+    
+    .description-intro {
+      font-size: 18px;
+      color: $secondary-color;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  }
+
+  // Details Section
+  .details-section {
+    margin-bottom: $spacing-xl;
+    
+    h3 {
+      font-size: 24px;
+      margin-bottom: $spacing-lg;
+      text-align: center;
+    }
+    
+    .details-grid {
+      @include grid(3, $spacing-lg);
+      
+      @include responsive($tablet) {
+        grid-template-columns: 1fr;
+      }
+      
+      .detail-item {
+        padding: $spacing-lg;
+        background: $white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-5px);
+        }
+        
+        .detail-title {
+          display: block;
+          font-size: 18px;
+          font-weight: 600;
+          margin-bottom: $spacing-sm;
+          color: $primary-color;
+        }
+        
+        .detail-description {
+          color: $secondary-color;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+
+  // Technical Specifications
+  .specs-section {
+    background-color: $light-gray;
+    padding: $spacing-xl;
+    margin-bottom: $spacing-xl;
+    border-radius: 8px;
+    
+    h3 {
+      font-size: 24px;
+      margin-bottom: $spacing-lg;
+      text-align: center;
+    }
+    
+    .specs-grid {
+      @include grid(2, $spacing-md);
+      
+      @include responsive($tablet) {
+        grid-template-columns: 1fr;
+      }
+      
+      .spec-item {
+        @include flex(row, flex-start, flex-start, $spacing-md);
+        padding: $spacing-md;
+        background: $white;
+        border-radius: 8px;
+        
+        .spec-label {
+          font-weight: 600;
+          color: $primary-color;
+          min-width: 120px;
+        }
+        
+        .spec-value {
+          color: $secondary-color;
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  // Features List
+  .features-list {
+    margin: $spacing-lg 0;
+    padding-left: $spacing-lg;
+    
+    li {
+      margin-bottom: $spacing-md;
+      padding-left: $spacing-lg;
+      color: $secondary-color;
+      
+      &::before {
+        content: "•";
+        color: $accent-color;
+        font-size: 1.5em;
+        position: absolute;
+        left: 0;
+        top: -0.2em;
+      }
+    }
+  }
+}
+
+
+
+// Print Styles
+@media print {
+  .product-description {
+    .details-grid,
+    .specs-grid {
+      display: block;
+      
+      > * {
+        margin-bottom: $spacing-md;
+        break-inside: avoid;
+      }
+    }
   }
 }

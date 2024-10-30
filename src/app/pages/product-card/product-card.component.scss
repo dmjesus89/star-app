@@ -41,7 +41,7 @@
 
 .discount-badge {
   position: absolute;
-  top: 10px;
+  top: 12px;
   right: 12px;
   background: #000;
   color: white;
@@ -51,7 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 500;
   z-index: 2;
 }
@@ -175,5 +175,95 @@
   .product-info {
     padding: 10px;
     padding-bottom: 20px;
+  }
+}
+
+
+.size-selector-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.size-selector-content {
+  width: 100%;
+  padding: 20px;
+}
+
+.size-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+  h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.size-button {
+  width: 45px;
+  height: 45px;
+  border: 1px solid #ddd;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &.selected {
+    border-color: #000;
+    background: #000;
+    color: white;
+  }
+
+  &:hover:not(.selected) {
+    border-color: #000;
+  }
+}
+
+.buy-button {
+  width: 100%;
+  padding: 12px;
+  background: #000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: #333;
   }
 }

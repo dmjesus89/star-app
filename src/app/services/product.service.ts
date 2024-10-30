@@ -32,7 +32,7 @@ export class ProductService {
       imageUrl: 'https://images.tcdn.com.br/img/img_prod/1048809/kit_camisa_e_short_futevolei_sand_3381_1_c04261fce170de7ba07c5ddfb4084a96.png',
       originalPrice: 99.90,
       currentPrice: 59.00,
-      discount: 5,
+      discount: 15,
       installments: {
         number: 2,
         value: 29.50
@@ -197,4 +197,13 @@ export class ProductService {
     return of(this.products.find(product => product.id === id
     ));
   }
+
+  getRelatedProducts(category: string): Observable<Product[]> {
+    const filteredProducts = this.products.filter(product => 
+      product.category.toLowerCase() === category.toLowerCase()
+    );
+    return of(filteredProducts);
+  }
+
+
 }

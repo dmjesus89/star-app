@@ -1,5 +1,5 @@
 <div class="product-card">
-  <!-- Image Container -->
+  <!-- Existing card content -->
   <div class="image-container">
     <a [routerLink]="['/product', product.id]">
       <img [src]="product.imageUrl" [alt]="product.name" class="product-img">
@@ -10,7 +10,6 @@
     </div>
   </div>
 
-  <!-- Product Info -->
   <div class="product-info">
     <a [routerLink]="['/product', product.id]" class="product-link">
       <h3 class="product-name">{{ product.name }}</h3>
@@ -31,18 +30,43 @@
       </div>
     </a>
 
-    <!-- Action Buttons -->
     <div class="product-actions">
       <div class="action-buttons">
-        <button class="btn-primary" (click)="onBuyClick()">
+        <button class="btn-primary" (click)="toggleSizeSelector()">
           Comprar
         </button>
-        <button class="btn-secondary" (click)="onQuickViewClick()">
+        <button class="btn-secondary" [routerLink]="['/product', product.id]">
           <i class="fas fa-eye"></i>
-          <span class="quick-view-text" [routerLink]="['/product', product.id]">Espiar
-          </span>
+          <span class="quick-view-text">Espiar</span>
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Size Selector Overlay -->
+  <div class="size-selector-overlay" *ngIf="showSizeSelector">
+    <div class="size-selector-content">
+      <div class="size-selector-header">
+        <h3>TAMANHO</h3>
+        <button class="close-button" (click)="toggleSizeSelector()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      
+      <div class="size-options">
+        <button *ngFor="let size of product.sizes"
+                class="size-button"
+                [class.selected]="selectedSize === size"
+                (click)="selectSize(size)">
+          {{ size }}
+        </button>
+      </div>
+      
+      <button class="btn-primary buy-button"
+              [disabled]="!selectedSize"
+              (click)="addToCart()">
+        COMPRAR
+      </button>
     </div>
   </div>
 </div>

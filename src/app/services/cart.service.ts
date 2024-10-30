@@ -6,9 +6,8 @@ export interface CartItem {
   name: string;
   imageUrl: string;
   price: number;
-  originalPrice: number;
+  originalPrice?: number;
   quantity: number;
-  discount: number;
   size?: string;
 }
 

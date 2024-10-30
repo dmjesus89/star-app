@@ -1,19 +1,27 @@
 <!-- Cart notification -->
 <div class="cart-notification" *ngIf="showCartNotification">
+  
   <div class="notification-content">
+    
     <div class="product-info">
+      
       <img [src]="product?.imageUrl" [alt]="product?.name">
+      
       <div class="info">
-        <h3>{{ product?.name }} ({{ selectedSize }})</h3>
+        <p>{{ product?.name }} ({{ selectedSize }})
+          <button class="close-button" (click)="showCartNotification = false">
+            <span class="material-icons">close</span>
+          </button> 
+        <p>
+          
         <p>{{ quantity }} x R$ {{ product?.currentPrice?.toFixed(2) }}</p>
+        <b>Adicionado ao carrinho com sucesso!</b>
       </div>
-      <button class="close-button" (click)="showCartNotification = false">
-        <span class="material-icons">close</span>
-      </button>
+     
     </div>
     <div class="cart-total">
-      <p>Total ({{ quantity }} produto{{ quantity > 1 ? 's' : '' }}):</p>
-      <p class="total-price">R$ {{ (product?.currentPrice || 0) * quantity | number:'1.2-2' }}</p>
+      <p>Total ({{ cartCount }} produto{{ cartCount > 1 ? 's' : '' }}):</p>
+      <p class="total-price">R$ {{ cartTotal | number:'1.2-2' }}</p>
     </div>
     <button class="view-cart-button" routerLink="/carrinho">VER CARRINHO</button>
   </div>
@@ -42,7 +50,7 @@
     <div class="main-image">
       <img [src]="product?.imageUrl" [alt]="product?.name">
       <div class="discount-badge" *ngIf="product?.discount">
-        {{ product?.discount }}% OFF
+        {{ product?.discount }}%OFF
       </div>
     </div>
   </div>
@@ -62,6 +70,7 @@
         <span class="no-interest">sem juros</span>
       </div>
     </div>
+
 
     <ng-container *ngIf="isProductAvailable; else productUnavailable">
       <!-- Size Selection -->
@@ -89,15 +98,8 @@
       <button class="add-to-cart-button" (click)="addToCart()" [disabled]="!product || !selectedSize">
         COMPRAR
       </button>
-    </ng-container>
 
-    <ng-template #productUnavailable>
-      <div class="unavailable-message">
-        <p>Produto indisponível</p>
-      </div>
-    </ng-template>
-
-    <!-- Shipping Info -->
+      <!-- Shipping Info -->
     <div class="shipping-info">
       <h3>
         <span class="material-icons">local_shipping</span>
@@ -111,5 +113,142 @@
         Não sei meu CEP
       </a>
     </div>
+
+    </ng-container>
+
+    <ng-template #productUnavailable>
+      <div class="unavailable-message">
+        <p>Produto indisponível</p>
+      </div>
+    </ng-template>
+
+    
+
+    
+    
   </div>
+
 </div>
+
+<div class="product-description">
+  <!-- Collection Header -->
+  <section class="collection-header">
+    <h2>COLEÇÃO ARENA FUTEVÔLEI VERÃO24</h2>
+    <p class="description-intro">
+      Explore o melhor do Futevôlei com a exclusiva Coleção Arena PROALTO, onde design inovador encontra performance excepcional. Nossa linha premium foi desenvolvida especialmente para atletas que buscam o máximo em conforto e estilo.
+    </p>
+  </section>
+
+  <!-- Collection Details -->
+  <section class="details-section">
+    <h3>Detalhes da Coleção</h3>
+    <div class="details-grid">
+      <div class="detail-item">
+        <span class="detail-title">Design Exclusivo PROALTO FUTEVÔLEI</span>
+        <span class="detail-description">
+          Criado por nossa equipe de designers em colaboração com atletas profissionais, cada peça reflete a essência do esporte com estilo único e contemporâneo.
+        </span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-title">Adaptação Sofisticada</span>
+        <span class="detail-description">
+          Tecnologia de modelagem avançada que garante ajuste perfeito ao seu corpo, oferecendo liberdade de movimento e máximo conforto durante a prática esportiva.
+        </span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-title">Proteção Solar Integrada</span>
+        <span class="detail-description">
+          Tecido com proteção FPU50+ incorporada, garantindo proteção contra os raios solares nocivos sem comprometer a respirabilidade e o conforto térmico.
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Specifications -->
+  <section class="specs-section">
+    <h3>Especificações Técnicas</h3>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <span class="spec-label">Composição</span>
+        <span class="spec-value">90% Poliéster | 10% Elastano</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Modelagem</span>
+        <span class="spec-value">Adaptação Sofisticada com Tecnologia de Compressão</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Proteção UV</span>
+        <span class="spec-value">FPU50+ Integrada ao Tecido</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Tecnologia</span>
+        <span class="spec-value">DryFit | Quick Dry | Antimicrobial</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Cuidados</span>
+        <span class="spec-value">
+          Lavável à Máquina (30°C)
+          Não usar alvejante
+          Não secar em tambor
+          Passar a ferro em temperatura baixa
+        </span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Fabricação</span>
+        <span class="spec-value">Produzido com Excelência Nacional</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Features -->
+  <section class="features-section">
+    <h3>Características Principais</h3>
+    <ul class="features-list">
+      <li>Design anatômico que proporciona liberdade de movimento</li>
+      <li>Tecido de alta performance com tecnologia de secagem rápida</li>
+      <li>Costuras reforçadas para maior durabilidade</li>
+      <li>Acabamento premium em todos os detalhes</li>
+      <li>Etiquetas em silicone para maior conforto</li>
+      <li>Durabilidade excepcional mesmo com uso frequente</li>
+    </ul>
+  </section>
+
+  <!-- Care Instructions -->
+  <section class="care-section specs-section">
+    <h3>Instruções de Cuidado</h3>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <span class="spec-label">Lavagem</span>
+        <span class="spec-value">
+          Lave em água fria (30°C)
+          Use ciclo delicado
+          Lave cores semelhantes juntas
+        </span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Secagem</span>
+        <span class="spec-value">
+          Secar à sombra
+          Não usar secadora
+          Evitar exposição direta ao sol
+        </span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Passagem</span>
+        <span class="spec-value">
+          Temperatura baixa se necessário
+          Não passar sobre estampas
+        </span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Avisos</span>
+        <span class="spec-value">
+          Não usar alvejante
+          Não limpar a seco
+          Evitar contato com superfícies ásperas
+        </span>
+      </div>
+    </div>
+  </section>
+</div>
+

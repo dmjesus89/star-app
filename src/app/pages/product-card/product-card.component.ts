@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CartService,CartItem } from '../../services/cart.service';
 
 interface ProductInstallment {
   quantity: number;
@@ -16,6 +17,7 @@ export interface ProductCard {
   link: string;
   discount?: number;
   installments: ProductInstallment;
+  sizes?: string[];
 }
 
 
@@ -30,12 +32,40 @@ export class ProductCardComponent {
   @Input() product!: ProductCard;
   @Output() buy = new EventEmitter<ProductCard>();
   @Output() quickView = new EventEmitter<ProductCard>();
+  showSizeSelector = false;
+  selectedSize: string = '';
+
+  constructor(private cartService: CartService) {}
+
+  toggleSizeSelector(): void {
+    this.showSizeSelector = !this.showSizeSelector;
+    if (!this.showSizeSelector) {
+      this.selectedSize = '';
+    }
+  }
+
+  selectSize(size: string): void {
+    this.selectedSize = size;
+  }
+
+  addToCart(): void {
+    if (!this.selectedSize) return;
+
+    const cartItem : CartItem = {
+      id: this.product.id,
+      name: this.product.name,
+      imageUrl: this.product.imageUrl,
+      price: this.product.price,
+      quantity: 1,
+      size: this.selectedSize,
+    };
+
+    this.cartService.addToCart(cartItem);
+    this.toggleSizeSelector();
+  }
 
   formatPrice(price: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(price);
+    return `R$ ${price.toFixed(2)}`;
   }
 
   onBuyClick(): void {

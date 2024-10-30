@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CartService } from '../../services/cart.service';
+import { Subject, takeUntil } from 'rxjs';import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { UtilitiesComponent } from '../utilities/utilities.component';
@@ -18,7 +19,30 @@ import { NavigationComponent } from '../navigation/navigation.component';
     NavigationComponent],
   standalone: true
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
+  cartCount = 0;
+  private destroy$ = new Subject<void>();
+
+  constructor(private cartService: CartService) {}
+
   toggleMenu() {
   }
+
+  ngOnInit() {
+    this.cartService.cartItems$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.cartCount = this.cartService.getCartCount();
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  toggleCart(): void {
+    this.cartService.toggleCart();
+  }
+
 }
