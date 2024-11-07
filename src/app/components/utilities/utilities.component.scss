@@ -1,3 +1,5 @@
+// utilities.scss
+
 .utilities-container {
   display: flex;
   align-items: center;
@@ -79,15 +81,28 @@
 
 .cart-badge {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -8px;
+  right: 8px;
   background: #dc3545;
   color: white;
-  border-radius: 50%;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-  min-width: 1.5rem;
-  text-align: center;
+  border-radius: 999px; /* Usar um valor alto garante forma perfeitamente circular */
+  padding: 0.15rem 0.4rem;
+  font-size: 0.7rem;
+  min-width: 1.2rem;
+  min-height: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border: 2px solid white; /* Adiciona borda branca para melhor contraste */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Sombra sutil */
+  transform: scale(0.9); /* Deixa o badge ligeiramente menor */
+  transition: transform 0.2s ease; /* Animação suave */
+}
+
+/* Efeito hover opcional */
+.utility-button:hover .cart-badge {
+  transform: scale(1);
 }
 
 @media (max-width: 768px) {

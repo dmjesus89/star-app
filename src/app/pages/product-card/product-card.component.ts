@@ -1,7 +1,9 @@
+//product-card.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { CartService,CartItem } from '../../services/cart.service';
+import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../models/cart-item.model';
 
 interface ProductInstallment {
   quantity: number;
@@ -16,7 +18,6 @@ export interface ProductCard {
   imageUrl: string;
   link: string;
   discount?: number;
-  installments: ProductInstallment;
   sizes?: string[];
 }
 
@@ -34,6 +35,8 @@ export class ProductCardComponent {
   @Output() quickView = new EventEmitter<ProductCard>();
   showSizeSelector = false;
   selectedSize: string = '';
+  isProductAvailable = false;
+
 
   constructor(private cartService: CartService) {}
 

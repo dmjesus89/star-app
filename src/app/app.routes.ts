@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { NonAuthGuard } from './guards/non-auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -58,7 +59,7 @@ export const routes: Routes = [
   {
     path: 'product/:id',
     loadComponent: () => 
-      import('./components/product-detail/product-detail.component')
+      import('./pages/product-detail/product-detail.component')
         .then(m => m.ProductDetailComponent)
   },
   {
@@ -66,13 +67,25 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
+        canActivate: [NonAuthGuard],
         loadComponent: () => import('./pages/login/login.component')
           .then(m => m.LoginComponent)
       },
       {
         path: 'register',
+        canActivate: [NonAuthGuard],
         loadComponent: () => import('./pages/register/register.component')
           .then(m => m.RegisterComponent)
+      },
+      {
+        path: 'profile',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent)
+      },
+      {
+        path: 'forgot-password',
+        canActivate: [NonAuthGuard],
+        loadComponent: () => import('./pages/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent)
       }
     ]
   },

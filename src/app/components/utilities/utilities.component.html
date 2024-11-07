@@ -1,3 +1,5 @@
+<!-- // utilities.html-->
+ 
 <div class="utilities-container">
   <!-- Support/Service Dropdown -->
   <div class="utility-item" [class.active]="showSupport">
@@ -6,7 +8,7 @@
       <span class="utility-label">Atendimento</span>
     </button>
     <div class="dropdown-menu" [class.show]="showSupport">
-      <a [href]="getWhatsAppLink()" class="dropdown-item">
+      <a [href]="getWhatsAppLink()" class="dropdown-item" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-whatsapp"></i>
         <span>{{contactInfo.whatsapp.formattedNumber}}</span>
       </a>
@@ -17,15 +19,36 @@
     </div>
   </div>
 
-  <!-- Account Dropdown -->
+ <!-- Account Dropdown -->
   <div class="utility-item" [class.active]="showAccount">
     <button class="utility-button" (click)="toggleAccount($event)">
       <i class="utility-icon fas fa-user"></i>
-      <span class="utility-label">Minha conta</span>
+      <span class="utility-label">{{ currentUser ? currentUser.fullname : 'Minha conta' }}</span>
     </button>
     <div class="dropdown-menu" [class.show]="showAccount">
-      <a routerLink="/account/register" class="dropdown-item">Criar uma conta</a>
-      <a routerLink="/account/login" class="dropdown-item">Iniciar sessão</a>
+      <!-- Show these items when not logged in -->
+      <ng-container *ngIf="!currentUser">
+        <a routerLink="/account/register" class="dropdown-item">
+          <i class="fas fa-user-plus"></i>
+          <span>Criar uma conta</span>
+        </a>
+        <a routerLink="/account/login" class="dropdown-item">
+          <i class="fas fa-sign-in-alt"></i>
+          <span>Iniciar sessão</span>
+        </a>
+      </ng-container>
+
+      <!-- Show these items when logged in -->
+      <ng-container *ngIf="currentUser">
+        <a routerLink="/account/profile" class="dropdown-item">
+          <i class="fas fa-user-circle"></i>
+          <span>Meu Perfil</span>
+        </a>
+        <a href="javascript:void(0)" class="dropdown-item" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Sair</span>
+        </a>
+      </ng-container>
     </div>
   </div>
 
@@ -38,6 +61,8 @@
     </button>
   </div>
 
+  <!-- Cart Sidebar -->
+  <app-cart-sidebar></app-cart-sidebar>
 
 
 </div>

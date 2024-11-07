@@ -527,7 +527,6 @@ $widescreen: 1200px;
       color: $secondary-color;
       
       &::before {
-        content: "•";
         color: $accent-color;
         font-size: 1.5em;
         position: absolute;

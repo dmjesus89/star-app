@@ -1,3 +1,4 @@
+<!-- product-detail.html -->
 <!-- Cart notification -->
 <div class="cart-notification" *ngIf="showCartNotification">
   
@@ -65,10 +66,10 @@
         </span>
         <span class="current-price">R$ {{ product?.currentPrice?.toFixed(2) }}</span>
       </div>
-      <div class="installments" *ngIf="product?.installments">
+      <!-- <div class="installments" *ngIf="product?.installments">
         {{ product?.installments?.number }}x de R$ {{ product?.installments?.value?.toFixed(2) }}
         <span class="no-interest">sem juros</span>
-      </div>
+      </div> -->
     </div>
 
 

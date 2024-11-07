@@ -1,78 +1,88 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-
-interface CartItem {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-  originalPrice: number;
-  quantity: number;
-  discount: number;
-}
+import { CartItem } from '../../models/cart-item.model';
 
 @Component({
   selector: 'app-cart-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './cart-sidebar.component.html',
-  styleUrl: './cart-sidebar.component.scss'
+  styleUrls: ['./cart-sidebar.component.scss']
 })
-export class CartSidebarComponent {
-  @Output() close = new EventEmitter<void>();
-  
-  cartItems: CartItem[] = [
-    {
-      id: 1,
-      name: 'Regata Masculina | Movimento | Verde Neon (M)',
-      imageUrl: 'path-to-image',
-      price: 59.00,
-      originalPrice: 99.00,
-      quantity: 1,
-      discount: 41
-    },
-    // Add more items as needed
-  ];
+export class CartSidebarComponent implements OnInit, OnDestroy {
+  cartItems: CartItem[] = [];
+  isOpen = false;
+  private subscriptions: Subscription[] = [];
+  freeShippingRemaining: number = 0;
 
-  cep: string = '';
-  freeShippingThreshold = 350;
+  constructor(public cartService: CartService) {
+    this.subscriptions.push(
+      this.cartService.cartItems$.subscribe(items => {
+        this.cartItems = items;
+        this.updateFreeShippingRemaining();
+      }),
+      this.cartService.showCart$.subscribe(show => {
+        this.isOpen = show;
+      })
+    );
+  }
 
-  updateQuantity(item: CartItem, change: number): void {
-    const newQuantity = item.quantity + change;
-    if (newQuantity >= 1 && newQuantity <= 10) {
-      item.quantity = newQuantity;
+  ngOnInit() {
+    this.updateFreeShippingRemaining();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  closeCart() {
+    this.cartService.toggleCart();
+  }
+
+  removeItem(item: CartItem) {
+    this.cartService.removeFromCart(item.id, item.size);
+  }
+
+  increaseQuantity(item: CartItem) {
+    if (this.cartService.canIncreaseQuantity(item.id, item.size)) {
+      this.cartService.updateQuantity(item.id, item.quantity + 1, item.size);
     }
   }
 
-  removeItem(item: CartItem): void {
-    this.cartItems = this.cartItems.filter(i => i.id !== item.id);
+  decreaseQuantity(item: CartItem) {
+    if (item.quantity > 1) {
+      this.cartService.updateQuantity(item.id, item.quantity - 1, item.size);
+    }
   }
 
   getSubtotal(): number {
-    return this.cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return this.cartService.getSubtotal();
   }
 
   getTotal(): number {
-    // Add shipping cost if needed
-    return this.getSubtotal();
+    return this.cartService.getTotal();
   }
 
-  getRemainingForFreeShipping(): number {
-    const subtotal = this.getSubtotal();
-    return subtotal >= this.freeShippingThreshold ? 0 : this.freeShippingThreshold - subtotal;
+  getFreeShippingThreshold(): number {
+    return this.cartService.getFreeShippingThreshold();
   }
 
-  calculateShipping(): void {
-    if (this.cep.length === 8) {
-      // Implement shipping calculation
-      console.log('Calculating shipping for:', this.cep);
-    }
+  getInterestFreeInstallments(): number {
+    return this.cartService.getInterestFreeInstallments();
   }
 
-  checkout(): void {
-    // Implement checkout logic
-    console.log('Proceeding to checkout');
+  getInstallmentValue(): number {
+    return this.cartService.getInstallmentValue();
+  }
+
+  updateFreeShippingRemaining() {
+    this.freeShippingRemaining = this.cartService.getRemainingForFreeShipping();
+  }
+
+  initiateCheckout() {
+    console.log('Starting checkout process...');
   }
 }

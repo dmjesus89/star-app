@@ -1,3 +1,5 @@
+// product-listing.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -54,10 +56,6 @@ export class ProductListingComponent implements OnInit {
       imageUrl: product.imageUrl,
       link: `/produtos/${product.category}/${product.id}`,
       discount: product.discount,
-      installments: {
-        quantity: product.installments.number,
-        value: product.installments.value
-      },
       sizes: product.sizes,
     };
   }

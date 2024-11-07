@@ -1,0 +1,241 @@
+<!-- profile.component.html -->
+<div class="profile-container">
+    <div class="profile-header">
+      <h1>Minha Conta</h1>
+      <p class="subtitle">Gerencie suas informações pessoais e preferências</p>
+    </div>
+  
+    <div class="profile-content">
+      <!-- Navigation Tabs -->
+      <div class="profile-nav">
+        <button 
+          [class.active]="activeSection === 'personal'"
+          (click)="setActiveSection('personal')"
+        >
+          <i class="fas fa-user"></i>
+          <span>Dados Pessoais</span>
+        </button>
+        <button 
+          [class.active]="activeSection === 'address'"
+          (click)="setActiveSection('address')"
+        >
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Endereço</span>
+        </button>
+        <button 
+          [class.active]="activeSection === 'password'"
+          (click)="setActiveSection('password')"
+        >
+          <i class="fas fa-lock"></i>
+          <span>Senha</span>
+        </button>
+        <button 
+          [class.active]="activeSection === 'preferences'"
+          (click)="setActiveSection('preferences')"
+        >
+          <i class="fas fa-bell"></i>
+          <span>Preferências</span>
+        </button>
+      </div>
+  
+      <!-- Alert Messages -->
+      <div class="alert success-alert" *ngIf="successMessage">
+        <i class="fas fa-check-circle"></i>
+        {{ successMessage }}
+      </div>
+      <div class="alert error-alert" *ngIf="errorMessage">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ errorMessage }}
+      </div>
+  
+      <!-- Personal Data Form -->
+      <div class="profile-section" *ngIf="activeSection === 'personal'" [@fadeInOut]>
+        <h2>Dados Pessoais</h2>
+        <form [formGroup]="personalDataForm" (ngSubmit)="onSavePersonalData()">
+          <div class="form-group">
+            <label for="fullname">Nome Completo</label>
+            <input id="fullname" type="text" formControlName="fullname">
+            <span class="error-message" *ngIf="personalDataForm.get('fullname')?.errors?.['required'] && personalDataForm.get('fullname')?.touched">
+              Nome é obrigatório
+            </span>
+          </div>
+  
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" formControlName="email">
+            <span class="error-message" *ngIf="personalDataForm.get('email')?.errors?.['email'] && personalDataForm.get('email')?.touched">
+              Email inválido
+            </span>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Telefone</label>
+              <input id="phone" type="tel" formControlName="phone">
+              <span class="error-message" *ngIf="personalDataForm.get('phone')?.errors?.['pattern'] && personalDataForm.get('phone')?.touched">
+                Formato inválido (+XX XXXXX XXXX)
+              </span>
+            </div>
+  
+            <div class="form-group">
+              <label for="dateOfBirth">Data de Nascimento</label>
+              <input id="dateOfBirth" type="date" formControlName="dateOfBirth">
+            </div>
+          </div>
+  
+          <button type="submit" [disabled]="personalDataForm.invalid || isLoading">
+            <i class="fas fa-spinner fa-spin" *ngIf="isLoading"></i>
+            <span>Salvar Alterações</span>
+          </button>
+        </form>
+      </div>
+  
+      <!-- Address Form -->
+      <div class="profile-section" *ngIf="activeSection === 'address'" [@fadeInOut]>
+        <h2>Endereço</h2>
+        <form [formGroup]="addressForm" (ngSubmit)="onSaveAddress()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="street">Rua</label>
+              <input id="street" type="text" formControlName="street">
+            </div>
+  
+            <div class="form-group small">
+              <label for="number">Número</label>
+              <input id="number" type="text" formControlName="number">
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="complement">Complemento</label>
+            <input id="complement" type="text" formControlName="complement">
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="neighborhood">Bairro</label>
+              <input id="neighborhood" type="text" formControlName="neighborhood">
+            </div>
+  
+            <div class="form-group">
+              <label for="postalCode">CEP</label>
+              <input id="postalCode" type="text" formControlName="postalCode">
+            </div>
+          </div>
+  
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">Cidade</label>
+              <input id="city" type="text" formControlName="city">
+            </div>
+  
+            <div class="form-group small">
+              <label for="state">Estado</label>
+              <input id="state" type="text" formControlName="state">
+            </div>
+          </div>
+  
+          <button type="submit" [disabled]="addressForm.invalid || isLoading">
+            <i class="fas fa-spinner fa-spin" *ngIf="isLoading"></i>
+            <span>Salvar Endereço</span>
+          </button>
+        </form>
+      </div>
+  
+      <!-- Password Form -->
+      <div class="profile-section" *ngIf="activeSection === 'password'" [@fadeInOut]>
+        <h2>Alterar Senha</h2>
+        <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+          <div class="form-group">
+            <label for="currentPassword">Senha Atual</label>
+            <input id="currentPassword" type="password" formControlName="currentPassword">
+          </div>
+  
+          <div class="form-group">
+            <label for="newPassword">Nova Senha</label>
+            <input id="newPassword" type="password" formControlName="newPassword">
+          </div>
+  
+          <div class="form-group">
+            <label for="confirmPassword">Confirmar Nova Senha</label>
+            <input id="confirmPassword" type="password" formControlName="confirmPassword">
+            <span class="error-message" *ngIf="passwordForm.errors?.['passwordMismatch']">
+              As senhas não coincidem
+            </span>
+          </div>
+  
+          <button type="submit" [disabled]="passwordForm.invalid || isLoading">
+            <i class="fas fa-spinner fa-spin" *ngIf="isLoading"></i>
+            <span>Alterar Senha</span>
+          </button>
+        </form>
+      </div>
+  
+      <!-- Preferences Form -->
+      <div class="profile-section" *ngIf="activeSection === 'preferences'" [@fadeInOut]>
+        <h2>Preferências de Notificação</h2>
+        <form [formGroup]="preferencesForm" (ngSubmit)="onSavePreferences()">
+          <div class="preferences-grid">
+            <label class="preference-item">
+              <input type="checkbox" formControlName="newsletter">
+              <span class="checkbox-custom"></span>
+              <div class="preference-content">
+                <strong>Newsletter</strong>
+                <p>Receba nossas novidades por email</p>
+              </div>
+            </label>
+  
+            <label class="preference-item">
+              <input type="checkbox" formControlName="smsNotifications">
+              <span class="checkbox-custom"></span>
+              <div class="preference-content">
+                <strong>SMS</strong>
+                <p>Notificações via mensagem de texto</p>
+              </div>
+            </label>
+  
+            <label class="preference-item">
+              <input type="checkbox" formControlName="emailNotifications">
+              <span class="checkbox-custom"></span>
+              <div class="preference-content">
+                <strong>Email</strong>
+                <p>Notificações por email</p>
+              </div>
+            </label>
+  
+            <label class="preference-item">
+              <input type="checkbox" formControlName="orderUpdates">
+              <span class="checkbox-custom"></span>
+              <div class="preference-content">
+                <strong>Status do Pedido</strong>
+                <p>Atualizações sobre seus pedidos</p>
+              </div>
+            </label>
+  
+            <label class="preference-item">
+              <input type="checkbox" formControlName="promotions">
+              <span class="checkbox-custom"></span>
+              <div class="preference-content">
+                <strong>Promoções</strong>
+                <p>Ofertas exclusivas e descontos</p>
+              </div>
+            </label>
+  
+            <label class="preference-item">
+              <input type="checkbox" formControlName="recommendations">
+              <span class="checkbox-custom"></span>
+              <div class="preference-content">
+                <strong>Recomendações</strong>
+                <p>Produtos personalizados para você</p>
+              </div>
+            </label>
+          </div>
+  
+          <button type="submit" [disabled]="isLoading">
+            <i class="fas fa-spinner fa-spin" *ngIf="isLoading"></i>
+            <span>Salvar Preferências</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>

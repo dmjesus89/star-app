@@ -1,10 +1,12 @@
+// product-detail.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../../services/product.service';
 import { Subject, takeUntil } from 'rxjs'
-import { CartService,CartItem } from '../../services/cart.service';
+import { CartService } from '../../services/cart.service';
+import { CartItem } from '../../models/cart-item.model';
 
 
 interface BreadcrumbItem {
@@ -50,7 +52,6 @@ export class ProductDetailComponent implements OnInit {
         product => {
           if (product) {
             this.product = product;
-            // Safely check if sizes exist and have length
             this.isProductAvailable = Array.isArray(product.sizes) && product.sizes.length > 0;
             this.selectedSize = this.isProductAvailable && product.sizes ? product.sizes[0] : '';
             this.updateBreadcrumbs(product);

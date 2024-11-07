@@ -1,11 +1,12 @@
-<div class="cart-sidebar">
-    <div class="cart-header">
-      <h2>Carrinho de Compras</h2>
-      <button class="close-button" (click)="close.emit()">
-        <span class="material-icons">×</span>
-      </button>
-    </div>
+<div class="cart-sidebar" [class.open]="isOpen">
+  <div class="cart-header">
+    <h2>Carrinho de Compras</h2>
+    <button class="close-button" (click)="closeCart()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
 
+  <div class="cart-content" *ngIf="!cartService.isCartEmpty()">
     <div class="cart-items">
       <div class="cart-item" *ngFor="let item of cartItems">
         <div class="item-image">
@@ -13,62 +14,74 @@
         </div>
         <div class="item-details">
           <h3>{{ item.name }}</h3>
-          <div class="item-price">
-            <span class="current-price">R${{ item.price.toFixed(2) }}</span>
+          <p class="item-variant" *ngIf="item.size">Tamanho: {{ item.size }}</p>
+          <div class="price-container">
+            <span class="current-price">{{ cartService.formatPrice(item.price) }}</span>
+            <span class="original-price" *ngIf="item.originalPrice">
+              {{ cartService.formatPrice(item.originalPrice) }}
+            </span>
             <span class="discount" *ngIf="item.discount">-{{ item.discount }}%</span>
           </div>
-          <div class="quantity-controls">
-            <button (click)="updateQuantity(item, -1)">-</button>
-            <input type="number" [(ngModel)]="item.quantity" readonly>
-            <button (click)="updateQuantity(item, 1)">+</button>
-          </div>
         </div>
-        <button class="remove-item" (click)="removeItem(item)">
-          <span class="material-icons">delete</span>
+        <div class="quantity-controls">
+          <button 
+            class="quantity-btn" 
+            (click)="decreaseQuantity(item)"
+            [disabled]="item.quantity <= 1">
+            <i class="fas fa-minus"></i>
+          </button>
+          <span class="quantity">{{ item.quantity }}</span>
+          <button 
+            class="quantity-btn" 
+            (click)="increaseQuantity(item)"
+            [disabled]="cartService.isMaxQuantity(item.id, item.size)">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <button class="remove-btn" (click)="removeItem(item)">
+          <i class="fas fa-trash"></i>
         </button>
       </div>
     </div>
-
-    <div class="free-shipping-info" *ngIf="getRemainingForFreeShipping() > 0">
-      Ganhe frete grátis com mais R${{ getRemainingForFreeShipping().toFixed(2) }}
+<!-- 
+    <div class="shipping-info" *ngIf="freeShippingRemaining > 0">
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="(getSubtotal() / getFreeShippingThreshold()) * 100"></div>
+      </div>
+      <p>Faltam {{ cartService.formatPrice(freeShippingRemaining) }} para frete grátis!</p>
     </div>
+    
+    <div class="shipping-success" *ngIf="freeShippingRemaining <= 0">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <p>Sucesso! Você tem frete grátis</p>
+    </div> -->
 
     <div class="cart-summary">
-      <div class="subtotal">
+      <div class="summary-row">
         <span>Subtotal (sem frete):</span>
-        <span>R${{ getSubtotal().toFixed(2) }}</span>
+        <span>{{ cartService.formatPrice(getSubtotal()) }}</span>
       </div>
-
-      <div class="shipping-calculator">
-        <div class="shipping-input">
-          <input type="text" [(ngModel)]="cep" placeholder="Seu CEP" maxlength="8">
-          <button (click)="calculateShipping()">CALCULAR</button>
-        </div>
-        <a href="#" class="cep-link">Não sei meu CEP</a>
-        
-        <div class="shipping-option" *ngIf="cep">
-          <input type="radio" checked>
-          <label>Proalto - Rua Eugênio Trevisan, 130, Vinhedo</label>
-          <span class="shipping-price">Grátis</span>
-        </div>
-      </div>
-
-      <div class="total">
+      <div class="summary-row total">
         <span>Total:</span>
-        <div class="total-value">
-          <span class="amount">R${{ getTotal().toFixed(2) }}</span>
-          <span class="installments">Ou até 3 x de R${{ (getTotal() / 3).toFixed(2) }} sem juros</span>
-        </div>
+        <span>{{ cartService.formatPrice(getTotal()) }}</span>
       </div>
-
-      <button class="checkout-button" (click)="checkout()">
-        INICIAR COMPRA
-      </button>
-
-      <button class="quick-buy-button">
-        Compra rápida com <img src="path-to-nuvem-logo.png" alt="Nuvem">
-      </button>
-
-      <a class="continue-shopping" routerLink="/">Ver mais produtos</a>
+      <!-- <div class="installments" *ngIf="getTotal() > 0">
+        Ou até {{ getInterestFreeInstallments() }}x de {{ cartService.formatPrice(getInstallmentValue()) }} sem juros
+      </div> -->
     </div>
+
+    <button class="checkout-button" (click)="initiateCheckout()">
+      INICIAR COMPRA
+    </button>
   </div>
+
+  <div class="empty-cart" *ngIf="cartService.isCartEmpty()">
+    <i class="fas fa-shopping-cart"></i>
+    <p>Seu carrinho está vazio</p>
+    <button class="continue-shopping" (click)="closeCart()">
+      Continuar Comprando
+    </button>
+  </div>
+</div>

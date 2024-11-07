@@ -1,19 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-export interface ProductInstallments {
-  number: number;
-  value: number;
+export interface ProductSearchDTO {
+  category?: string;
+  subcategory?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  sortBy?: string;
+  sortDirection?: 'asc' | 'desc';
+  page?: number;
+  size?: number;
+  query?: string;
+  isBestSeller?: boolean;
+  isNew?: boolean;
+  hasDiscount?: boolean;
 }
 
 export interface Product {
   id: number;
   name: string;
+  description: string;
   imageUrl: string;
   originalPrice?: number;
   currentPrice: number;
   discount: number;
-  installments: ProductInstallments;
   category: string;
   subcategory?: string;
   isBestSeller?: boolean;
@@ -29,14 +39,11 @@ export class ProductService {
     {
       id: 1,
       name: "tank top homen 1",
+      description: "camisa masculina",
       imageUrl: 'https://images.tcdn.com.br/img/img_prod/1048809/kit_camisa_e_short_futevolei_sand_3381_1_c04261fce170de7ba07c5ddfb4084a96.png',
       originalPrice: 99.90,
       currentPrice: 59.00,
       discount: 15,
-      installments: {
-        number: 2,
-        value: 29.50
-      },
       category: 'men',
       subcategory: 'tank-top',
       isBestSeller: true,
@@ -46,13 +53,10 @@ export class ProductService {
     {
       id: 2,
       name: "tank top homem 2",
+      description: "camisa masculina",
       imageUrl: 'https://banzika.com.br/image/cache/catalog/data/produtos/Uniformes/eSport2/regata%20(1)-1100x1100w.png',
       currentPrice: 59.00,
       discount: 0,
-      installments: {
-        number: 2,
-        value: 29.50
-      },
       category: 'men',
       subcategory: 'tank-top',
       isBestSeller: true,
@@ -62,14 +66,11 @@ export class ProductService {
     {
       id: 3,
       name: "jacketa homen 1",
+      description: "camisa masculina",
       imageUrl: 'https://banzika.com.br/image/cache/catalog/data/produtos/Uniformes/eSport2/regata%20(1)-1100x1100w.png',
       originalPrice: 149.90,
       currentPrice: 89.90,
       discount: 5,
-      installments: {
-        number: 2,
-        value: 44.95
-      },
       category: 'men',
       subcategory: 'top',
       isBestSeller: true,
@@ -79,6 +80,7 @@ export class ProductService {
     {
       id: 4,
       name: "tank top mulher 1",
+      description: "camisa masculina",
       imageUrl: 'https://banzika.com.br/image/cache/catalog/data/produtos/Uniformes/eSport2/regata%20(1)-1100x1100w.png',
       originalPrice: 89.90,
       currentPrice: 59.90,
@@ -88,11 +90,11 @@ export class ProductService {
       isBestSeller: true,
       isNew: true,
       sizes: ['P', 'M', 'G', 'GG'],
-      installments: { number: 2, value: 29.95 }
     },
     {
       id: 5,
       name: "legging mulher 1",
+      description: "camisa masculina",
       imageUrl: 'https://banzika.com.br/image/cache/catalog/data/produtos/Uniformes/eSport2/regata%20(1)-1100x1100w.png',
       originalPrice: 179.90,
       currentPrice: 119.90,
@@ -101,20 +103,16 @@ export class ProductService {
       subcategory: 'leggings',
       isBestSeller: true,
       isNew:false,
-      sizes: ['P', 'M', 'G', 'GG'],
-      installments: { number: 3, value: 39.97 }
+      sizes: ['P'],
     },
     {
       id: 6,
       name: "legging homem 1",
+      description: "camisa masculina",
       imageUrl: 'https://banzika.com.br/image/cache/catalog/data/produtos/Uniformes/eSport2/regata%20(1)-1100x1100w.png',
       originalPrice: 99.90,
       currentPrice: 59.00,
       discount: 5,
-      installments: {
-        number: 2,
-        value: 29.50
-      },
       category: 'men',
       subcategory: 'leggings',
       isBestSeller: true,
@@ -124,6 +122,7 @@ export class ProductService {
     {
       id: 6,
       name: 'legging homem 2',
+      description: "camisa masculina",
       currentPrice: 216.60,
       originalPrice: 228.00,
       imageUrl: 'https://banzika.com.br/image/cache/catalog/data/produtos/placas/filmes-e-series/chetoat1-8d2f84f0f1b7aefcd714633341463811-1024-1024-1100x1100.jpg',
@@ -133,11 +132,11 @@ export class ProductService {
       isBestSeller: false,
       isNew:false,
       sizes: ['P', 'M', 'G', 'GG'],
-      installments: { number: 3, value: 72.20 }
     },
     {
       id: 7,
       name: 'legging homem 3',
+      description: "camisa masculina",
       originalPrice: 99.90,
       currentPrice: 59.00,
       imageUrl: 'https://banzika.com.br/image/cache/catalog/data/produtos/placas/filmes-e-series/chetoat1-8d2f84f0f1b7aefcd714633341463811-1024-1024-1100x1100.jpg',
@@ -146,8 +145,7 @@ export class ProductService {
       subcategory: 'leggings',
       isBestSeller: false,
       isNew:false,
-      sizes: ['P', 'M', 'G', 'GG'],
-      installments: { number: 3, value: 72.20 }
+      sizes: ['P', 'M', 'G', 'GG']
     }
   ];
 

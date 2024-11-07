@@ -1,37 +1,18 @@
+// utilities.component.ts
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
-import { CartComponent } from '../../pages/cart/cart.component';
 import { CartSidebarComponent } from '../cart-sidebar/cart-sidebar.component';
-
-interface ContactInfo {
-  whatsapp: {
-    number: string;
-    formattedNumber: string;
-  };
-  email: {
-    address: string;
-  };
-}
-
-export interface CartItem {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-  originalPrice: number;
-  quantity: number;
-  discount: number;
-  size?: string;
-}
+import { AuthenticationResponse } from '../../models/authentication-response';
 
 @Component({
   selector: 'app-utilities',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule,CartSidebarComponent],
+  imports: [FormsModule, CommonModule, RouterModule, CartSidebarComponent],
   templateUrl: './utilities.component.html',
   styleUrl: './utilities.component.scss'
 })
@@ -39,30 +20,37 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
   showSupport = false;
   showAccount = false;
   cartCount = 0;
+  showCart$ = false;
+  currentUser: AuthenticationResponse | null = null;
   private unlistenClick: (() => void) | null = null;
   private cartSubscription!: Subscription;
-  showCart$ = false;
+  private authSubscription!: Subscription;
 
-  contactInfo: ContactInfo = {
+  contactInfo = {
     whatsapp: {
       number: '+351965476825',
       formattedNumber: '+351965476825'
     },
     email: {
-      address: 'marketing@teste.com'
+      address: 'contact@digomais.com'
     }
   };
 
   constructor(
     private renderer: Renderer2,
-    private cartService: CartService
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.cartSubscription = this.cartService.cartItems$.subscribe(() => {
       this.cartCount = this.cartService.getCartCount();
     });
+
+    this.authSubscription = this.authService.currentUser$.subscribe(
+      user => this.currentUser = user
+    );
   }
 
-  
   ngOnInit() {
     if (typeof window !== 'undefined') {
       this.unlistenClick = this.renderer.listen('document', 'click', (event) => {
@@ -82,6 +70,14 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();
     }
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.showAccount = false;
   }
 
   getWhatsAppLink(): string {
